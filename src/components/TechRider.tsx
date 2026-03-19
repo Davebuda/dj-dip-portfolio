@@ -15,8 +15,26 @@ export default function TechRider() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="tech-rider" ref={ref} className="bg-dip-black py-16 md:py-20 px-8 md:px-16">
-      <div className="max-w-7xl mx-auto">
+    <section id="tech-rider" ref={ref} className="relative py-16 md:py-20 px-8 md:px-16 overflow-hidden">
+
+      {/* Background photo */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/dip-setup.jpg"
+          alt=""
+          aria-hidden
+          className="w-full h-full object-cover object-top"
+          style={{ filter: 'grayscale(100%) contrast(1.05)', opacity: 0.22 }}
+        />
+        {/* Blend into black on all edges */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #080808 0%, transparent 25%, transparent 70%, #080808 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #080808 0%, transparent 20%, transparent 80%, #080808 100%)' }} />
+        {/* Dark centre overlay so text stays readable */}
+        <div className="absolute inset-0 bg-dip-black/60" />
+      </div>
+
+      {/* Content */}
+      <div className="relative max-w-7xl mx-auto">
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -52,7 +70,7 @@ export default function TechRider() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.05 * i }}
-              className="bg-dip-dark p-5 md:p-6 hover:bg-dip-card transition-colors duration-300"
+              className="bg-dip-black/70 backdrop-blur-sm p-5 md:p-6 hover:bg-dip-black/50 transition-colors duration-300"
             >
               <p className="label mb-3">{item.category}</p>
               <ul className="space-y-2">
@@ -70,40 +88,6 @@ export default function TechRider() {
           ))}
         </div>
       </div>
-
-      {/* Full-bleed setup photo blended into black */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 1.2, delay: 0.4 }}
-        className="relative mt-0 h-[480px] md:h-[600px] overflow-hidden"
-      >
-        <img
-          src="/images/dip-setup.jpg"
-          alt="DJ DiP at the decks"
-          className="w-full h-full object-cover object-top"
-          style={{ filter: 'grayscale(100%) contrast(1.05)' }}
-        />
-        {/* Top fade into section background */}
-        <div
-          className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, #080808, transparent)' }}
-        />
-        {/* Bottom fade into next section */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, #080808 40%, transparent)' }}
-        />
-        {/* Side fades */}
-        <div
-          className="absolute inset-y-0 left-0 w-32 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #080808, transparent)' }}
-        />
-        <div
-          className="absolute inset-y-0 right-0 w-32 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #080808, transparent)' }}
-        />
-      </motion.div>
     </section>
   )
 }
