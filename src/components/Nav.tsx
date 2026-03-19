@@ -27,7 +27,7 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center">
-          <img src="/images/dip-logo.png" alt="DJ DiP" className="h-12 w-auto object-contain" />
+          <img src="/images/dip-logo.png" alt="DJ DiP" className="h-20 w-auto object-contain" />
         </a>
 
         {/* Desktop links */}
