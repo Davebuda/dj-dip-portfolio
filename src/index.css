@@ -165,6 +165,12 @@
   100% { transform: translateX(-50%); }
 }
 
+/* Gallery auto-scroll */
+@keyframes gallery-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

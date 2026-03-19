@@ -1,6 +1,7 @@
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
+import Gallery from './components/Gallery'
 import Highlights from './components/Highlights'
 import TechRider from './components/TechRider'
 import Booking from './components/Booking'
@@ -22,6 +23,7 @@ export default function App() {
       <Nav />
       <Hero />
       <About />
+      <Gallery />
       <Highlights />
       <TechRider />
       <Booking />
