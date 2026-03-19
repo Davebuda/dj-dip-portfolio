@@ -36,7 +36,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1 }}
-              className="relative overflow-hidden h-[320px] md:h-[400px]"
+              className="relative overflow-hidden h-[480px] md:h-[580px]"
               style={{
                 background: 'rgba(8,8,8,0.25)',
                 backdropFilter: 'blur(2px)',
@@ -76,36 +76,26 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-5"
             >
-              {/* DJ DiP */}
-              <div className="flex items-baseline gap-4 leading-none">
-                <span className="font-display text-[13vw] md:text-[6.5vw] lg:text-[5.5vw] text-white leading-none">
-                  DJ
-                </span>
+              {/* DJ DiP — one colour, big */}
+              <div className="leading-[0.9]">
                 <span
-                  className="font-display text-[13vw] md:text-[6.5vw] lg:text-[5.5vw] leading-none"
+                  className="font-display text-[18vw] md:text-[9vw] lg:text-[8vw] leading-none"
                   style={{
                     background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
                 >
-                  DiP
+                  DJ DiP
                 </span>
               </div>
               {/* DAVIS */}
-              <div className="leading-none mt-1">
-                <span
-                  className="font-display text-[10vw] md:text-[5vw] lg:text-[4.2vw] leading-none"
-                  style={{
-                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
+              <div className="leading-[0.9] mt-1">
+                <span className="font-display text-[14vw] md:text-[7vw] lg:text-[6.2vw] text-white leading-none">
                   DAVIS
                 </span>
               </div>
-              <p className="label mt-3">Resident DJ · KlubN · Oslo, Norway</p>
+              <p className="label mt-4">Resident DJ · KlubN · Oslo, Norway</p>
             </motion.div>
 
             {/* Contact row */}
