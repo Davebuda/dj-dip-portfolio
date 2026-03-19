@@ -70,6 +70,40 @@ export default function TechRider() {
           ))}
         </div>
       </div>
+
+      {/* Full-bleed setup photo blended into black */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 1.2, delay: 0.4 }}
+        className="relative mt-0 h-[480px] md:h-[600px] overflow-hidden"
+      >
+        <img
+          src="/images/dip-setup.jpg"
+          alt="DJ DiP at the decks"
+          className="w-full h-full object-cover object-top"
+          style={{ filter: 'grayscale(100%) contrast(1.05)' }}
+        />
+        {/* Top fade into section background */}
+        <div
+          className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, #080808, transparent)' }}
+        />
+        {/* Bottom fade into next section */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, #080808 40%, transparent)' }}
+        />
+        {/* Side fades */}
+        <div
+          className="absolute inset-y-0 left-0 w-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to right, #080808, transparent)' }}
+        />
+        <div
+          className="absolute inset-y-0 right-0 w-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to left, #080808, transparent)' }}
+        />
+      </motion.div>
     </section>
   )
 }
