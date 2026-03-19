@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 
 interface GalleryItem { filename: string; url: string }
 
+function isVideo(filename: string) {
+  return /\.(mp4|mov|webm|ogg)$/i.test(filename)
+}
+
 export default function AdminGallery() {
   const [images, setImages] = useState<GalleryItem[]>([])
   const [uploading, setUploading] = useState(false)
@@ -58,12 +62,12 @@ export default function AdminGallery() {
         onClick={() => inputRef.current?.click()}
         className="border-2 border-dashed border-dip-red/30 hover:border-dip-red/60 rounded-2xl p-12 text-center cursor-pointer transition-colors mb-8 group"
       >
-        <input ref={inputRef} type="file" multiple accept="image/*" className="hidden" onChange={handleUpload} />
+        <input ref={inputRef} type="file" multiple accept="image/*,video/*" className="hidden" onChange={handleUpload} />
         <div className="text-4xl mb-3 text-dip-red/40 group-hover:text-dip-red/70 transition-colors">↑</div>
         <p className="font-heading font-bold text-dip-cream/60 group-hover:text-dip-cream transition-colors">
           {uploading ? 'Uploading…' : 'Click to upload photos'}
         </p>
-        <p className="font-body text-sm text-dip-muted/40 mt-1">JPG, PNG, WebP · max 15 MB each</p>
+        <p className="font-body text-sm text-dip-muted/40 mt-1">JPG, PNG, WebP, MP4, MOV, WebM · max 500 MB each</p>
       </div>
 
       {msg && <p className="text-dip-rose font-body text-sm mb-6">{msg}</p>}
@@ -75,11 +79,28 @@ export default function AdminGallery() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {images.map(img => (
             <div key={img.filename} className="group relative aspect-square rounded-xl overflow-hidden bg-dip-card">
-              <img
-                src={img.url}
-                alt={img.filename}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+              {isVideo(img.filename) ? (
+                <video
+                  src={img.url}
+                  className="w-full h-full object-cover"
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+              ) : (
+                <img
+                  src={img.url}
+                  alt={img.filename}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              )}
+              {isVideo(img.filename) && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-white text-sm ml-0.5">▶</span>
+                  </div>
+                </div>
+              )}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                 <button
                   onClick={() => handleDelete(img.filename)}

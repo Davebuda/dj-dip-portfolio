@@ -58,11 +58,11 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`)
   },
 })
-const upload = multer({ storage, limits: { fileSize: 15 * 1024 * 1024 } })
+const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } })
 
 app.get('/admin-api/gallery', (req, res) => {
   const files = fs.existsSync(GALLERY_DIR)
-    ? fs.readdirSync(GALLERY_DIR).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
+    ? fs.readdirSync(GALLERY_DIR).filter(f => /\.(jpg|jpeg|png|webp|mp4|mov|webm|ogg)$/i.test(f))
     : []
   res.json(files.map(f => ({ filename: f, url: `/gallery/${f}` })))
 })
