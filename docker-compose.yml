@@ -5,8 +5,13 @@ services:
     build: .
     container_name: djdip-portfolio
     restart: unless-stopped
+    depends_on:
+      - admin-api
+    volumes:
+      - portfolio-data:/data
     networks:
       - traefik-public
+      - internal
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.djdip-portfolio.rule=Host(`djdip.no`) || Host(`www.djdip.no`)"
@@ -14,6 +19,22 @@ services:
       - "traefik.http.routers.djdip-portfolio.tls.certresolver=letsencrypt"
       - "traefik.http.services.djdip-portfolio.loadbalancer.server.port=80"
 
+  admin-api:
+    build: ./admin-server
+    container_name: djdip-admin-api
+    restart: unless-stopped
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-djdip2024}
+    volumes:
+      - portfolio-data:/data
+    networks:
+      - internal
+
+volumes:
+  portfolio-data:
+
 networks:
   traefik-public:
     external: true
+  internal:
+    driver: bridge
