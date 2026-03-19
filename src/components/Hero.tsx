@@ -119,7 +119,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="flex items-center gap-4 mt-1"
+              className="flex items-center gap-4 mt-auto pt-8"
             >
               {/* Instagram */}
               <a
@@ -138,7 +138,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
-                style={{ background: 'linear-gradient(135deg, #ff7700, #ff3300)', boxShadow: '0 4px 20px rgba(255,119,0,0.5)' }}
+                style={{ background: 'linear-gradient(135deg, #E63020, #8B1A10)', boxShadow: '0 4px 20px rgba(230,48,32,0.5)' }}
               >
                 <FaSoundcloud className="text-white w-5 h-5" />
               </a>
