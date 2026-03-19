@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useInView } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface GalleryItem { filename: string; url: string }
 
@@ -8,8 +8,6 @@ function isVideo(filename: string) {
 }
 
 export default function GalleryStrip() {
-  const ref = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
   const [items, setItems] = useState<GalleryItem[]>([])
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null)
 
@@ -20,7 +18,6 @@ export default function GalleryStrip() {
       .catch(() => {})
   }, [])
 
-  // Close lightbox on Escape
   useEffect(() => {
     if (!lightbox) return
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null) }
@@ -36,38 +33,19 @@ export default function GalleryStrip() {
 
   return (
     <>
-      <section id="gallery" ref={ref} className="bg-dip-black py-16 md:py-20 overflow-hidden">
+      <section id="gallery" className="bg-dip-black py-16 md:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 md:px-16 mb-8">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            className="label mb-3"
-          >
-            Media
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-            className="font-display text-5xl md:text-6xl text-dip-cream leading-none"
-          >
-            GALLERY
-          </motion.h2>
+          <p className="label mb-3">Media</p>
+          <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">GALLERY</h2>
         </div>
 
-        {/* Scrolling strip */}
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to right, #080808, transparent)' }} />
           <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to left, #080808, transparent)' }} />
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.25, duration: 0.6 }}
-          >
-            <div className="flex gap-3 gallery-scroll" style={{ width: 'max-content' }}>
+          <div className="flex gap-3 gallery-scroll" style={{ width: 'max-content' }}>
             {repeated.map((item, i) => (
               <div
                 key={`${item.filename}-${i}`}
@@ -102,12 +80,10 @@ export default function GalleryStrip() {
                 )}
               </div>
             ))}
-            </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {lightbox && (
           <motion.div
