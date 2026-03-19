@@ -36,7 +36,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1 }}
-              className="relative overflow-hidden h-[480px] md:h-[580px]"
+              className="relative overflow-hidden rounded-2xl h-[480px] md:h-[580px]"
               style={{
                 background: 'rgba(8,8,8,0.25)',
                 backdropFilter: 'blur(2px)',
@@ -76,10 +76,10 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-5"
             >
-              {/* DJ DiP — one colour, big */}
-              <div className="leading-[0.9]">
+              {/* DJ DiP — one colour, KlubN scale */}
+              <div className="leading-none">
                 <span
-                  className="font-display text-[18vw] md:text-[9vw] lg:text-[8vw] leading-none"
+                  className="font-display text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none"
                   style={{
                     background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
                     WebkitBackgroundClip: 'text',
@@ -90,8 +90,8 @@ export default function Hero() {
                 </span>
               </div>
               {/* DAVIS */}
-              <div className="leading-[0.9] mt-1">
-                <span className="font-display text-[14vw] md:text-[7vw] lg:text-[6.2vw] text-white leading-none">
+              <div className="leading-none mt-1">
+                <span className="font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white">
                   DAVIS
                 </span>
               </div>
@@ -122,7 +122,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.2 }}
-            className="glass-card liquid-glass p-8 md:p-10 flex flex-col gap-7 z-10"
+            className="glass-card liquid-glass rounded-2xl p-8 md:p-10 flex flex-col gap-7 z-10"
           >
             {/* Header */}
             <div>
