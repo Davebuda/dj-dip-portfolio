@@ -18,7 +18,7 @@ export default {
         heading: ['"Cabinet Grotesk"', 'system-ui', 'sans-serif'],
         body:    ['Satoshi', 'system-ui', 'sans-serif'],
         mono:    ['"DM Mono"', 'ui-monospace', 'monospace'],
-        script:  ['"Great Vibes"', 'cursive'],
+        script:  ['"Permanent Marker"', 'cursive'],
       },
       letterSpacing: {
         tighter: '-0.04em',
