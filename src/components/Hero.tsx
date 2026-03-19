@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { FaInstagram, FaSoundcloud, FaTiktok } from 'react-icons/fa6'
 
 export default function Hero() {
   return (
@@ -111,8 +112,46 @@ export default function Hero() {
               <a href="tel:+4796736112" className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
                 <span className="text-dip-red">✆</span> +47 967 36 112
               </a>
-              <a href="https://instagram.com/dj_dip" target="_blank" rel="noreferrer" className="font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
-                @dj_dip
+            </motion.div>
+
+            {/* Social icons */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.65 }}
+              className="flex items-center gap-4 mt-1"
+            >
+              {/* Instagram */}
+              <a
+                href="https://instagram.com/dj_dip"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                style={{ background: 'linear-gradient(135deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80)', boxShadow: '0 4px 20px rgba(193,53,132,0.5)' }}
+              >
+                <FaInstagram className="text-white w-5 h-5" />
+              </a>
+
+              {/* SoundCloud */}
+              <a
+                href="https://soundcloud.com/bukenya-davis"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                style={{ background: 'linear-gradient(135deg, #ff7700, #ff3300)', boxShadow: '0 4px 20px rgba(255,119,0,0.5)' }}
+              >
+                <FaSoundcloud className="text-white w-5 h-5" />
+              </a>
+
+              {/* TikTok */}
+              <a
+                href="https://tiktok.com/@dj_dip"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                style={{ background: 'linear-gradient(135deg, #010101, #1a1a2e)', boxShadow: '0 4px 20px rgba(105,201,208,0.4)', border: '1px solid rgba(105,201,208,0.3)' }}
+              >
+                <FaTiktok className="text-white w-5 h-5" />
               </a>
             </motion.div>
           </div>
