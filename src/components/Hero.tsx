@@ -227,7 +227,7 @@ export default function Hero() {
             <div>
               <p className="label mb-4">Key Stages</p>
               <ul className="space-y-2.5">
-                {['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe'].map((v, i) => (
+                {['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe', 'Oslo Street Foods - Dopamine'].map((v, i) => (
                   <li key={v} className="flex items-center gap-3">
                     <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
                     <span className="font-body text-xs text-dip-cream/60">{v}</span>
