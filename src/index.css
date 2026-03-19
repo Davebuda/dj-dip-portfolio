@@ -170,6 +170,12 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+.gallery-scroll {
+  animation: gallery-scroll 28s linear infinite;
+}
+.gallery-scroll:hover {
+  animation-play-state: paused;
+}
 
 @keyframes fade-in {
   from { opacity: 0; }

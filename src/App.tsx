@@ -3,6 +3,7 @@ import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
 import Highlights from './components/Highlights'
+import GalleryStrip from './components/GalleryStrip'
 import TechRider from './components/TechRider'
 import Booking from './components/Booking'
 import Footer from './components/Footer'
@@ -27,6 +28,7 @@ function Portfolio() {
       <Hero />
       <About />
       <Highlights />
+      <GalleryStrip />
       <TechRider />
       <Booking />
       <Footer />
