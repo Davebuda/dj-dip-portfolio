@@ -31,7 +31,7 @@ export default function TechRider() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="font-display text-7xl md:text-[9rem] text-dip-cream leading-none"
+            className="font-display text-8xl md:text-[10rem] text-dip-cream leading-none"
           >
             TECH<br />RIDER
           </motion.h2>
@@ -39,7 +39,7 @@ export default function TechRider() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.35 }}
-            className="hidden md:block text-dip-muted font-body font-light text-sm max-w-[220px] text-right leading-relaxed"
+            className="hidden md:block text-dip-muted font-body font-light text-base max-w-[240px] text-right leading-relaxed"
           >
             Preferred setup for optimal performance. Alternatives accepted — always confirm in advance.
           </motion.p>
@@ -52,13 +52,16 @@ export default function TechRider() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.05 * i }}
-              className="bg-dip-dark p-8 hover:bg-dip-card transition-colors duration-300"
+              className="bg-dip-dark p-8 md:p-10 hover:bg-dip-card transition-colors duration-300"
             >
               <p className="label mb-5">{item.category}</p>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {item.items.map(eq => (
-                  <li key={eq} className="font-body font-light text-dip-cream/60 text-sm flex items-center gap-3">
-                    <span className="w-1 h-1 rounded-full bg-dip-red flex-shrink-0" />
+                  <li key={eq} className="font-body font-light text-dip-cream/60 text-base flex items-center gap-3">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)' }}
+                    />
                     {eq}
                   </li>
                 ))}

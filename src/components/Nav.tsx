@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 
 const links = [
-  { label: 'About',     href: '#about' },
-  { label: 'Sound',     href: '#sound' },
-  { label: 'Events',    href: '#events' },
-  { label: 'Tech',      href: '#tech-rider' },
-  { label: 'Book',      href: '#book' },
+  { label: 'About',  href: '#about' },
+  { label: 'Sound',  href: '#sound' },
+  { label: 'Events', href: '#events' },
+  { label: 'Tech',   href: '#tech-rider' },
+  { label: 'Book',   href: '#book' },
 ]
 
 export default function Nav() {
@@ -21,14 +21,12 @@ export default function Nav() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-dip-black/95 backdrop-blur-md border-b border-white/5'
-          : ''
+        scrolled ? 'bg-dip-black/90 backdrop-blur-md border-b border-white/[0.06]' : ''
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-display text-2xl tracking-widest text-dip-cream hover:text-dip-rose transition-colors">
+        <a href="#" className="font-display text-3xl tracking-wide text-dip-cream hover:text-dip-rose transition-colors">
           DJ DiP
         </a>
 
@@ -38,7 +36,7 @@ export default function Nav() {
             <a
               key={link.label}
               href={link.href}
-              className="text-xs font-body font-medium tracking-[0.25em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
+              className="font-heading font-bold text-sm tracking-[0.2em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
             >
               {link.label}
             </a>
@@ -48,7 +46,7 @@ export default function Nav() {
         {/* Desktop CTA */}
         <a
           href="#book"
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 border border-dip-red/60 text-dip-red text-xs font-body font-semibold tracking-[0.25em] uppercase hover:bg-dip-red hover:text-white transition-all duration-300"
+          className="hidden md:inline-flex btn-brand text-sm px-6 py-2.5"
         >
           Book Now
         </a>
@@ -67,13 +65,13 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-dip-dark/98 backdrop-blur-md border-t border-white/5 px-6 py-8 flex flex-col gap-6">
+        <div className="md:hidden bg-dip-dark/98 backdrop-blur-md border-t border-white/[0.06] px-6 py-8 flex flex-col gap-6">
           {links.map(link => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm font-body font-medium tracking-[0.25em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
+              className="font-heading font-bold text-base tracking-[0.2em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
             >
               {link.label}
             </a>
@@ -81,7 +79,7 @@ export default function Nav() {
           <a
             href="#book"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 inline-block text-center px-6 py-3 bg-dip-red text-white text-xs font-body font-semibold tracking-[0.25em] uppercase"
+            className="mt-2 btn-brand text-sm text-center"
           >
             Book Now
           </a>

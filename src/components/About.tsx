@@ -35,7 +35,7 @@ export default function About() {
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.15 }}
-              className="font-script text-5xl md:text-6xl text-dip-rose leading-tight mb-14"
+              className="font-script text-6xl md:text-7xl text-dip-rose leading-tight mb-14"
             >
               "Dance Floor<br />is Too Smooth."
             </motion.blockquote>
@@ -47,12 +47,15 @@ export default function About() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.25 + i * 0.08 }}
-                  className="p-5 border border-dip-rose/15 bg-dip-card group hover:border-dip-red/30 transition-colors"
+                  className="p-6 border border-dip-rose/15 bg-dip-card group hover:border-dip-red/30 transition-colors"
                 >
-                  <div className="font-display text-4xl text-dip-red mb-1 group-hover:text-dip-rose transition-colors">
+                  <div
+                    className="font-display text-5xl mb-1.5 group-hover:opacity-90 transition-opacity"
+                    style={{ background: 'linear-gradient(135deg, #E63020, #C4938A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                  >
                     {stat.value}
                   </div>
-                  <div className="text-xs font-body font-medium tracking-[0.15em] uppercase text-dip-muted leading-tight">
+                  <div className="text-sm font-heading font-bold tracking-[0.12em] uppercase text-dip-muted leading-tight">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -66,19 +69,19 @@ export default function About() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2 }}
           >
-            <h2 className="font-display text-7xl md:text-9xl text-dip-cream leading-none mb-8">
+            <h2 className="font-display text-8xl md:text-[10rem] text-dip-cream leading-none mb-8">
               DAVIS<br />
-              <span className="text-dip-red">DiP</span>
+              <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
             </h2>
 
-            <p className="text-dip-cream/65 font-body font-light leading-relaxed text-base md:text-lg">
+            <p className="text-dip-cream/65 font-body font-light leading-relaxed text-lg">
               With over eight years behind the decks and a deep understanding of club dynamics,
               DJ DiP (Davis) delivers prime-time, high-energy sets rooted in Hip-Hop/R&B,
               Afrobeat, Dancehall, and Amapiano — shaped into Urban Sound Fusion through
               seamless transitions, mature pacing, and production.
             </p>
 
-            <p className="text-dip-cream/40 font-body font-light leading-relaxed text-sm mt-5">
+            <p className="text-dip-cream/40 font-body font-light leading-relaxed text-base mt-5">
               Intentional genre + BPM bridges that stay smooth. Peak-hour control: from loose
               to controlled energy. Production-led transitions for maximum crowd impact.
               This isn't just mixing — it's sound direction.

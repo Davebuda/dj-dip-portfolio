@@ -32,7 +32,6 @@ export default function Genres() {
     <section id="sound" ref={ref} className="bg-dip-black py-28 md:py-36 px-8 md:px-16">
       <div className="max-w-7xl mx-auto">
 
-        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <div>
             <motion.p
@@ -46,7 +45,7 @@ export default function Genres() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="font-display text-7xl md:text-[9rem] text-dip-cream leading-none"
+              className="font-display text-8xl md:text-[10rem] text-dip-cream leading-none"
             >
               GENRES
             </motion.h2>
@@ -55,13 +54,12 @@ export default function Genres() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
-            className="hidden md:block text-dip-muted font-body font-light text-sm max-w-[240px] text-right leading-relaxed"
+            className="hidden md:block text-dip-muted font-body font-light text-base max-w-[260px] text-right leading-relaxed"
           >
             Fusing top genres into a single, cohesive Urban Club Sound
           </motion.p>
         </div>
 
-        {/* Grid */}
         <div className="grid md:grid-cols-2 gap-px bg-dip-rose/10">
           {genres.map((genre, i) => (
             <motion.div
@@ -72,15 +70,15 @@ export default function Genres() {
               className="bg-dip-dark p-10 md:p-14 group hover:bg-dip-card transition-colors duration-300 cursor-default"
             >
               <div className="flex items-start justify-between mb-8">
-                <span className="font-display text-7xl text-dip-red/30 group-hover:text-dip-red/60 transition-colors duration-300 leading-none">
+                <span className="font-mono text-6xl text-dip-red/25 group-hover:text-dip-red/55 transition-colors duration-300 leading-none">
                   {genre.num}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-dip-rose/40 mt-3 group-hover:bg-dip-rose transition-colors duration-300" />
+                <span className="w-2 h-2 rounded-full bg-dip-rose/40 mt-3 group-hover:bg-dip-rose transition-colors duration-300" />
               </div>
-              <h3 className="font-display text-4xl md:text-5xl text-dip-cream tracking-wide mb-4 leading-tight group-hover:text-white transition-colors">
+              <h3 className="font-display text-5xl md:text-6xl text-dip-cream tracking-tight mb-5 leading-tight group-hover:text-white transition-colors">
                 {genre.name}
               </h3>
-              <p className="text-dip-muted font-body font-light leading-relaxed text-sm">
+              <p className="text-dip-muted font-body font-light leading-relaxed text-base">
                 {genre.desc}
               </p>
             </motion.div>

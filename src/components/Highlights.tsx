@@ -60,7 +60,7 @@ export default function Highlights() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="font-display text-7xl md:text-[9rem] text-dip-cream leading-none mb-16"
+          className="font-display text-8xl md:text-[10rem] text-dip-cream leading-none mb-16"
         >
           STAGES
         </motion.h2>
@@ -72,15 +72,15 @@ export default function Highlights() {
               initial={{ opacity: 0, x: -24 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.06 * i }}
-              className={`group flex flex-col md:flex-row md:items-center justify-between py-7 border-b transition-all duration-300 ${
+              className={`group flex flex-col md:flex-row md:items-center justify-between py-8 border-b transition-all duration-300 ${
                 ev.featured
                   ? 'border-dip-red/40 hover:border-dip-red'
                   : 'border-dip-rose/10 hover:border-dip-rose/30'
               }`}
             >
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-8">
                 <span
-                  className={`font-display text-xl leading-none w-8 transition-colors duration-300 ${
+                  className={`font-mono text-2xl leading-none w-10 transition-colors duration-300 ${
                     ev.featured ? 'text-dip-red' : 'text-dip-red/25 group-hover:text-dip-red/60'
                   }`}
                 >
@@ -88,28 +88,28 @@ export default function Highlights() {
                 </span>
                 <div>
                   <p
-                    className={`font-body font-semibold text-lg transition-colors duration-300 ${
+                    className={`font-heading font-bold text-xl md:text-2xl transition-colors duration-300 ${
                       ev.featured ? 'text-white' : 'text-dip-cream group-hover:text-white'
                     }`}
                   >
                     {ev.venue}
                     {ev.featured && (
-                      <span className="ml-3 inline-block text-xs font-body font-semibold tracking-[0.2em] uppercase text-dip-red border border-dip-red/40 px-2 py-0.5 align-middle">
+                      <span className="ml-3 inline-block text-xs font-heading font-bold tracking-[0.2em] uppercase text-dip-red border border-dip-red/40 px-2.5 py-1 align-middle">
                         Resident
                       </span>
                     )}
                   </p>
-                  <p className="text-dip-muted font-body font-light text-sm mt-0.5">
+                  <p className="text-dip-muted font-body font-light text-base mt-1">
                     {ev.event}
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 mt-3 md:mt-0 ml-14 md:ml-0">
+              <div className="flex flex-wrap gap-2 mt-4 md:mt-0 ml-[72px] md:ml-0">
                 {ev.tags.map(tag => (
                   <span
                     key={tag}
-                    className="text-xs font-body tracking-wider text-dip-rose/50 bg-dip-rose/5 px-3 py-1 border border-dip-rose/10"
+                    className="text-sm font-heading font-bold tracking-wide text-dip-rose/55 bg-dip-rose/5 border border-dip-rose/10 px-3.5 py-1.5"
                   >
                     {tag}
                   </span>
