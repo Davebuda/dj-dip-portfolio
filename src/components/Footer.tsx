@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="bg-dip-black py-8 px-8 md:px-16 border-t border-white/[0.05]">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <img src="/images/dip-logo.png" alt="DJ DiP" className="h-16 w-auto object-contain opacity-60" />
+        <span className="font-display text-2xl tracking-wide text-dip-muted/60">DJ DiP</span>
 
         <p className="font-body text-sm text-dip-muted/30 tracking-[0.15em] uppercase text-center">
           © {new Date().getFullYear()} DJ DiP · Urban Sound Fusion · Oslo, Norway
