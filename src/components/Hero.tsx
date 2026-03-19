@@ -126,10 +126,10 @@ export default function Hero() {
                 href="https://instagram.com/dj_dip"
                 target="_blank"
                 rel="noreferrer"
-                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
                 style={{ background: 'linear-gradient(135deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80)', boxShadow: '0 4px 20px rgba(193,53,132,0.5)' }}
               >
-                <FaInstagram className="text-white w-5 h-5" />
+                <FaInstagram className="text-white w-7 h-7" />
               </a>
 
               {/* SoundCloud */}
@@ -137,10 +137,10 @@ export default function Hero() {
                 href="https://soundcloud.com/bukenya-davis"
                 target="_blank"
                 rel="noreferrer"
-                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
                 style={{ background: 'linear-gradient(135deg, #E63020, #8B1A10)', boxShadow: '0 4px 20px rgba(230,48,32,0.5)' }}
               >
-                <FaSoundcloud className="text-white w-5 h-5" />
+                <FaSoundcloud className="text-white w-7 h-7" />
               </a>
 
               {/* TikTok */}
@@ -148,10 +148,10 @@ export default function Hero() {
                 href="https://tiktok.com/@dj_dip"
                 target="_blank"
                 rel="noreferrer"
-                className="group relative flex items-center justify-center w-11 h-11 rounded-2xl transition-transform duration-300 hover:scale-110"
+                className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
                 style={{ background: 'linear-gradient(135deg, #010101, #1a1a2e)', boxShadow: '0 4px 20px rgba(105,201,208,0.4)', border: '1px solid rgba(105,201,208,0.3)' }}
               >
-                <FaTiktok className="text-white w-5 h-5" />
+                <FaTiktok className="text-white w-7 h-7" />
               </a>
             </motion.div>
           </div>
