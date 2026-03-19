@@ -1,9 +1,11 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { useContent } from '../hooks/useContent'
 
 export default function Booking() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { contact: { email, phone } } = useContent()
 
   return (
     <section id="book" ref={ref} className="relative py-20 px-8 md:px-16 overflow-hidden">
@@ -50,17 +52,17 @@ export default function Booking() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
         >
           <a
-            href="mailto:2djdip@gmail.com"
+            href={`mailto:${email}`}
             className="btn-brand w-full sm:w-auto text-sm px-8 group"
           >
             Email For Booking
             <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300 inline-block">→</span>
           </a>
           <a
-            href="tel:+4796736112"
+            href={`tel:${phone.replace(/\s/g, '')}`}
             className="btn-outline w-full sm:w-auto text-sm px-8"
           >
-            +47 967 36 112
+            {phone}
           </a>
         </motion.div>
 

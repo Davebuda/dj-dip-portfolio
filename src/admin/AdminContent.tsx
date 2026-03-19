@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 const DEFAULTS = {
   bio: 'With over eight years behind the decks and a deep understanding of club dynamics, DJ DiP delivers prime-time, high-energy sets rooted in Hip-Hop/R&B, Afrobeat, Dancehall, and Amapiano — shaped into a seamless Urban Sound Fusion through intentional genre bridges, mature BPM control, and production-led transitions.',
   bio2: 'Peak-hour specialist. Event Architect. Concept Builder. Resident DJ at KlubN Oslo.',
-  stages: 'KlubN — Resident\nGamba Beat Bar\nKiki\'s House\nFaksen Bar\nOld School Vibe',
-  genres: 'HipHop & RnB\nAfrobeats\nShatta\nAmapiano',
+  stages: 'KlubN — Resident\nGamba Beat Bar\nKiki\'s House\nFaksen Bar\nOld School Vibe\nOslo Street Foods - Dopamine',
+  genres: 'HipHop & RnB\nAfrobeats\nShatta\nAmapiano\nDancehall',
   email: '2djdip@gmail.com',
   phone: '+47 967 36 112',
   instagram: 'dj_dip',

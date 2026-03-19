@@ -171,7 +171,7 @@
   100% { transform: translateX(-50%); }
 }
 .gallery-scroll {
-  animation: gallery-scroll 28s linear infinite;
+  animation: gallery-scroll 55s linear infinite;
 }
 .gallery-scroll:hover {
   animation-play-state: paused;

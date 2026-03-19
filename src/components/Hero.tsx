@@ -1,7 +1,12 @@
 import { motion } from 'framer-motion'
 import { FaInstagram, FaSoundcloud, FaTiktok } from 'react-icons/fa6'
+import { useContent } from '../hooks/useContent'
 
 export default function Hero() {
+  const content = useContent()
+  const { email, phone } = content.contact
+  const { instagram, soundcloud, tiktok } = content.social
+
   return (
     <section className="relative min-h-screen overflow-hidden flex flex-col">
       {/* Dark overlay over the fixed backdrop */}
@@ -106,11 +111,11 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-wrap gap-5 mt-4"
             >
-              <a href="mailto:2djdip@gmail.com" className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
-                <span className="text-dip-red">✉</span> 2djdip@gmail.com
+              <a href={`mailto:${email}`} className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
+                <span className="text-dip-red">✉</span> {email}
               </a>
-              <a href="tel:+4796736112" className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
-                <span className="text-dip-red">✆</span> +47 967 36 112
+              <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
+                <span className="text-dip-red">✆</span> {phone}
               </a>
             </motion.div>
 
@@ -123,7 +128,7 @@ export default function Hero() {
             >
               {/* Instagram */}
               <a
-                href="https://instagram.com/dj_dip"
+                href={`https://instagram.com/${instagram}`}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
@@ -134,7 +139,7 @@ export default function Hero() {
 
               {/* SoundCloud */}
               <a
-                href="https://soundcloud.com/bukenya-davis"
+                href={`https://soundcloud.com/${soundcloud}`}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
@@ -145,7 +150,7 @@ export default function Hero() {
 
               {/* TikTok */}
               <a
-                href="https://tiktok.com/@dj_dip"
+                href={`https://tiktok.com/@${tiktok}`}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative flex items-center justify-center w-14 h-14 rounded-2xl transition-transform duration-300 hover:scale-110"
@@ -213,13 +218,10 @@ export default function Hero() {
             <div>
               <p className="label mb-3">Biography</p>
               <p className="font-body font-light text-dip-cream/75 text-base leading-relaxed">
-                With over eight years behind the decks and a deep understanding of club dynamics,
-                DJ DiP delivers prime-time, high-energy sets rooted in Hip-Hop/R&B, Afrobeat,
-                Dancehall, and Amapiano — shaped into a seamless Urban Sound Fusion through
-                intentional genre bridges, mature BPM control, and production-led transitions.
+                {content.bio}
               </p>
               <p className="font-body font-light text-dip-cream/38 text-sm leading-relaxed mt-3">
-                Peak-hour specialist. Event Architect. Concept Builder. Resident DJ at KlubN Oslo.
+                {content.bio2}
               </p>
             </div>
 
@@ -227,7 +229,7 @@ export default function Hero() {
             <div>
               <p className="label mb-4">Key Stages</p>
               <ul className="space-y-2.5">
-                {['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe', 'Oslo Street Foods - Dopamine'].map((v, i) => (
+                {content.stages.map((v, i) => (
                   <li key={v} className="flex items-center gap-3">
                     <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
                     <span className="font-body text-xs text-dip-cream/60">{v}</span>
@@ -240,7 +242,7 @@ export default function Hero() {
             <div>
               <p className="label mb-4">Genres</p>
               <div className="flex flex-wrap gap-2">
-                {['HipHop & RnB', 'Afrobeats', 'Shatta', 'Amapiano'].map(g => (
+                {content.genres.map(g => (
                   <span
                     key={g}
                     className="font-heading font-bold text-xs tracking-wide uppercase text-dip-rose/80 bg-dip-red/[0.08] border border-dip-red/[0.22] rounded-full px-4 py-1.5"
@@ -255,17 +257,17 @@ export default function Hero() {
             <div className="mt-auto">
               <div className="divider mb-6" />
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="mailto:2djdip@gmail.com" className="btn-brand flex-1 text-center text-sm">
+                <a href={`mailto:${email}`} className="btn-brand flex-1 text-center text-sm">
                   Email For Booking →
                 </a>
-                <a href="tel:+4796736112" className="btn-outline flex-1 text-center text-sm">
-                  +47 967 36 112
+                <a href={`tel:${phone.replace(/\s/g, '')}`} className="btn-outline flex-1 text-center text-sm">
+                  {phone}
                 </a>
               </div>
               <div className="flex items-center justify-between mt-5">
                 <span className="font-script text-3xl text-dip-rose/55">Davis DiP</span>
-                <a href="https://instagram.com/dj_dip" target="_blank" rel="noreferrer" className="label hover:text-dip-cream transition-colors">
-                  @dj_dip
+                <a href={`https://instagram.com/${instagram}`} target="_blank" rel="noreferrer" className="label hover:text-dip-cream transition-colors">
+                  @{instagram}
                 </a>
               </div>
             </div>

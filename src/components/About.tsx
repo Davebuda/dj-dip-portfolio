@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { useContent } from '../hooks/useContent'
 
 const stats = [
   { value: '8+',    label: 'Years Behind The Decks' },
@@ -11,6 +12,7 @@ const stats = [
 export default function About() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const content = useContent()
 
   return (
     <section id="about" ref={ref} className="bg-dip-dark py-16 md:py-20 px-8 md:px-16">
@@ -72,16 +74,11 @@ export default function About() {
             </h2>
 
             <p className="text-dip-cream/70 font-body font-light leading-relaxed text-base">
-              With over eight years behind the decks and a deep understanding of club dynamics,
-              DJ DiP (Davis) delivers prime-time, high-energy sets rooted in Hip-Hop/R&B,
-              Afrobeat, Dancehall, and Amapiano — shaped into Urban Sound Fusion through
-              seamless transitions, mature pacing, and production.
+              {content.bio}
             </p>
 
             <p className="text-dip-cream/40 font-body font-light leading-relaxed text-sm mt-4">
-              Intentional genre + BPM bridges that stay smooth. Peak-hour control: from loose
-              to controlled energy. Production-led transitions for maximum crowd impact.
-              This isn't just mixing — it's sound direction.
+              {content.bio2}
             </p>
 
             <div className="divider mt-8 mb-5" />
