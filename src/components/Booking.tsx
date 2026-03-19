@@ -51,14 +51,14 @@ export default function Booking() {
         >
           <a
             href="mailto:2djdip@gmail.com"
-            className="btn-brand w-full sm:w-auto text-sm px-10 py-4 group"
+            className="btn-brand w-full sm:w-auto text-sm px-8 group"
           >
             Email For Booking
             <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300 inline-block">→</span>
           </a>
           <a
             href="tel:+4796736112"
-            className="btn-outline w-full sm:w-auto text-sm px-10 py-4"
+            className="btn-outline w-full sm:w-auto text-sm px-8"
           >
             +47 967 36 112
           </a>

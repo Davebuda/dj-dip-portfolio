@@ -216,10 +216,10 @@ export default function Hero() {
             <div className="mt-auto">
               <div className="divider mb-6" />
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="mailto:2djdip@gmail.com" className="btn-brand flex-1 text-center text-sm py-3.5">
+                <a href="mailto:2djdip@gmail.com" className="btn-brand flex-1 text-center text-sm">
                   Email For Booking →
                 </a>
-                <a href="tel:+4796736112" className="btn-outline flex-1 text-center text-sm py-3.5">
+                <a href="tel:+4796736112" className="btn-outline flex-1 text-center text-sm">
                   +47 967 36 112
                 </a>
               </div>
