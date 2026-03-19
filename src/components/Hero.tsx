@@ -36,7 +36,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1 }}
-              className="relative overflow-hidden flex-1 min-h-[440px] md:min-h-[560px]"
+              className="relative overflow-hidden h-[320px] md:h-[400px]"
               style={{
                 background: 'rgba(8,8,8,0.25)',
                 backdropFilter: 'blur(2px)',
@@ -46,8 +46,11 @@ export default function Hero() {
               <img
                 src="/images/dip-portrait.png"
                 alt="DJ DiP"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-center"
               />
+
+              {/* Darkening overlay +8% */}
+              <div className="absolute inset-0 bg-black/[0.08] pointer-events-none" />
 
               {/* Bottom fade */}
               <div
@@ -73,12 +76,13 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-5"
             >
-              <div className="flex items-baseline gap-5 leading-none">
-                <span className="font-display text-[15vw] md:text-[7.5vw] lg:text-[6.5vw] text-white leading-none">
+              {/* DJ DiP */}
+              <div className="flex items-baseline gap-4 leading-none">
+                <span className="font-display text-[13vw] md:text-[6.5vw] lg:text-[5.5vw] text-white leading-none">
                   DJ
                 </span>
                 <span
-                  className="font-display text-[15vw] md:text-[7.5vw] lg:text-[6.5vw] leading-none"
+                  className="font-display text-[13vw] md:text-[6.5vw] lg:text-[5.5vw] leading-none"
                   style={{
                     background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
                     WebkitBackgroundClip: 'text',
@@ -88,7 +92,20 @@ export default function Hero() {
                   DiP
                 </span>
               </div>
-              <p className="label mt-2">Resident DJ · KlubN · Oslo, Norway</p>
+              {/* DAVIS */}
+              <div className="leading-none mt-1">
+                <span
+                  className="font-display text-[10vw] md:text-[5vw] lg:text-[4.2vw] leading-none"
+                  style={{
+                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  DAVIS
+                </span>
+              </div>
+              <p className="label mt-3">Resident DJ · KlubN · Oslo, Norway</p>
             </motion.div>
 
             {/* Contact row */}
