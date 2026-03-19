@@ -9,7 +9,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.djdip-portfolio.rule=Host(`djdip.com`) || Host(`www.djdip.com`)"
+      - "traefik.http.routers.djdip-portfolio.rule=Host(`djdip.no`) || Host(`www.djdip.no`)"
       - "traefik.http.routers.djdip-portfolio.entrypoints=websecure"
       - "traefik.http.routers.djdip-portfolio.tls.certresolver=letsencrypt"
       - "traefik.http.services.djdip-portfolio.loadbalancer.server.port=80"
