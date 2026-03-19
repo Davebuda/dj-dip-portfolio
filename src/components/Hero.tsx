@@ -220,7 +220,7 @@ export default function Hero() {
               <p className="font-body font-light text-dip-cream/75 text-base leading-relaxed">
                 {content.bio}
               </p>
-              <p className="font-body font-light text-dip-cream/38 text-sm leading-relaxed mt-3">
+              <p className="font-body font-light text-dip-cream/55 text-sm leading-relaxed mt-3">
                 {content.bio2}
               </p>
             </div>
@@ -231,8 +231,8 @@ export default function Hero() {
               <ul className="space-y-2.5">
                 {content.stages.map((v, i) => (
                   <li key={v} className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="font-body text-xs text-dip-cream/60">{v}</span>
+                    <span className="font-mono text-xs text-dip-red/55">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="font-body text-sm text-dip-cream/75">{v}</span>
                   </li>
                 ))}
               </ul>
@@ -245,7 +245,7 @@ export default function Hero() {
                 {content.genres.map(g => (
                   <span
                     key={g}
-                    className="font-heading font-bold text-xs tracking-wide uppercase text-dip-rose/80 bg-dip-red/[0.08] border border-dip-red/[0.22] rounded-full px-4 py-1.5"
+                    className="font-heading font-bold text-[11px] tracking-wide uppercase text-dip-rose/90 bg-dip-red/[0.1] border border-dip-red/[0.28] rounded-full px-4 py-1.5"
                   >
                     {g}
                   </span>

@@ -57,7 +57,7 @@ export default function TechRider() {
               <p className="label mb-3">{item.category}</p>
               <ul className="space-y-2">
                 {item.items.map(eq => (
-                  <li key={eq} className="font-body font-light text-dip-cream/60 text-sm flex items-center gap-2.5">
+                  <li key={eq} className="font-body font-light text-dip-cream/75 text-sm flex items-center gap-2.5">
                     <span
                       className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                       style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)' }}

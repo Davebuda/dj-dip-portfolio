@@ -94,7 +94,7 @@ export default function Highlights() {
                   >
                     {ev.venue}
                     {ev.featured && (
-                      <span className="ml-3 inline-block text-xs font-heading font-bold tracking-[0.2em] uppercase text-dip-red border border-dip-red/40 px-2 py-0.5 align-middle">
+                      <span className="ml-3 inline-block text-[11px] font-heading font-bold tracking-[0.16em] uppercase text-dip-red border border-dip-red/50 px-2 py-0.5 align-middle">
                         Resident
                       </span>
                     )}
@@ -109,7 +109,7 @@ export default function Highlights() {
                 {ev.tags.map(tag => (
                   <span
                     key={tag}
-                    className="text-xs font-heading font-bold tracking-wide text-dip-rose/60 bg-dip-rose/5 border border-dip-rose/10 rounded-full px-3 py-1"
+                    className="text-[11px] font-heading font-bold tracking-wide text-dip-rose/75 bg-dip-rose/[0.07] border border-dip-rose/20 rounded-full px-3 py-1"
                   >
                     {tag}
                   </span>

@@ -50,7 +50,7 @@
 @layer components {
   /* Eyebrow label */
   .label {
-    @apply text-xs font-heading font-bold tracking-[0.22em] uppercase text-dip-rose;
+    @apply text-[13px] font-heading font-bold tracking-[0.16em] uppercase text-dip-rose;
   }
 
   /* Divider */

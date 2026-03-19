@@ -54,7 +54,7 @@ export default function About() {
                   >
                     {stat.value}
                   </div>
-                  <div className="text-xs font-heading font-bold tracking-[0.12em] uppercase text-dip-muted leading-tight">
+                  <div className="text-sm font-heading font-bold tracking-[0.1em] uppercase text-dip-muted leading-tight">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -77,7 +77,7 @@ export default function About() {
               {content.bio}
             </p>
 
-            <p className="text-dip-cream/40 font-body font-light leading-relaxed text-sm mt-4">
+            <p className="text-dip-cream/55 font-body font-light leading-relaxed text-sm mt-4">
               {content.bio2}
             </p>
 
