@@ -6,13 +6,13 @@ export default function Booking() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="book" ref={ref} className="relative py-40 px-8 md:px-16 overflow-hidden">
+    <section id="book" ref={ref} className="relative py-20 px-8 md:px-16 overflow-hidden">
       <div className="absolute inset-0 bg-dip-dark" />
       <div className="absolute inset-0 bg-gradient-to-br from-dip-red/10 via-transparent to-dip-rose/5" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-dip-red/8 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-dip-red/8 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-        <span className="font-display text-[18rem] md:text-[28rem] text-white/[0.02] leading-none">DiP</span>
+        <span className="font-display text-[14rem] md:text-[20rem] text-white/[0.02] leading-none">DiP</span>
       </div>
 
       <div className="relative max-w-4xl mx-auto text-center">
@@ -20,7 +20,7 @@ export default function Booking() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="label mb-8"
+          className="label mb-6"
         >
           Get In Touch
         </motion.p>
@@ -29,7 +29,7 @@ export default function Booking() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15 }}
-          className="font-display text-7xl md:text-[9rem] text-dip-cream leading-none"
+          className="font-display text-5xl md:text-7xl text-dip-cream leading-none"
         >
           LET'S CREATE
         </motion.h2>
@@ -38,7 +38,7 @@ export default function Booking() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.25 }}
-          className="font-script text-5xl md:text-7xl text-dip-rose mt-2 mb-14"
+          className="font-script text-3xl md:text-5xl text-dip-rose mt-2 mb-8"
         >
           something unforgettable
         </motion.p>
@@ -47,7 +47,7 @@ export default function Booking() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.35 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
         >
           <a
             href="mailto:2djdip@gmail.com"

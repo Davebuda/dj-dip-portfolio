@@ -9,7 +9,7 @@ export default {
         'dip-card':     '#111111',
         'dip-red':      '#E63020',
         'dip-red-dark': '#BF2D1E',
-        'dip-rose':     '#C4938A',
+        'dip-rose':     '#D44040',
         'dip-cream':    '#F5F0EE',
         'dip-muted':    '#7A6260',
       },

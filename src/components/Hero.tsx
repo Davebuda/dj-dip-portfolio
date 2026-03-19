@@ -62,7 +62,7 @@ export default function Hero() {
               <div className="absolute top-4 right-4 z-20 pointer-events-none">
                 <svg viewBox="0 0 120 120" className="w-24 h-24 animate-spin" style={{ animationDuration: '22s' }}>
                   <path id="circle" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="none" />
-                  <text style={{ fontSize: '10px', fontFamily: 'Cabinet Grotesk', letterSpacing: '3px', fill: 'rgba(196,147,138,0.38)' }}>
+                  <text style={{ fontSize: '10px', fontFamily: 'Cabinet Grotesk', letterSpacing: '3px', fill: 'rgba(212,64,64,0.38)' }}>
                     <textPath href="#circle">URBAN · SOUND · FUSION · OSLO · DJ · DiP ·</textPath>
                   </text>
                 </svg>
@@ -81,7 +81,7 @@ export default function Hero() {
                 <span
                   className="font-display text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none"
                   style={{
-                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
+                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #D44040 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
@@ -137,7 +137,7 @@ export default function Hero() {
                 DAVIS<br />
                 <span
                   style={{
-                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #C4938A 100%)',
+                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #D44040 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
@@ -158,7 +158,7 @@ export default function Hero() {
                   <div
                     className="font-display text-5xl leading-none"
                     style={{
-                      background: 'linear-gradient(135deg, #E63020, #C4938A)',
+                      background: 'linear-gradient(135deg, #E63020, #D44040)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                     }}
@@ -173,7 +173,7 @@ export default function Hero() {
             {/* Bio */}
             <div>
               <p className="label mb-3">Biography</p>
-              <p className="font-body font-light text-dip-cream/65 text-base leading-relaxed">
+              <p className="font-body font-light text-dip-cream/75 text-base leading-relaxed">
                 With over eight years behind the decks and a deep understanding of club dynamics,
                 DJ DiP delivers prime-time, high-energy sets rooted in Hip-Hop/R&B, Afrobeat,
                 Dancehall, and Amapiano — shaped into a seamless Urban Sound Fusion through
@@ -184,42 +184,29 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Genres + Key Stages */}
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <p className="label mb-4">Genres</p>
-                <ul className="space-y-2.5">
-                  {['HipHop & RnB', 'Afrobeats', 'Shatta', 'Amapiano'].map((g, i) => (
-                    <li key={g} className="flex items-center gap-3">
-                      <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="font-body text-sm text-dip-cream/70">{g}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="label mb-4">Key Stages</p>
-                <ul className="space-y-2.5">
-                  {['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe'].map((v, i) => (
-                    <li key={v} className="flex items-center gap-3">
-                      <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="font-body text-xs text-dip-cream/60">{v}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {/* Key Stages */}
+            <div>
+              <p className="label mb-4">Key Stages</p>
+              <ul className="space-y-2.5">
+                {['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe'].map((v, i) => (
+                  <li key={v} className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-dip-red/40">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="font-body text-xs text-dip-cream/60">{v}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Setup tags */}
+            {/* Genres tags */}
             <div>
-              <p className="label mb-4">Setup</p>
+              <p className="label mb-4">Genres</p>
               <div className="flex flex-wrap gap-2">
-                {['Serato Native', 'CDJ 3000', 'DJM 3-11', 'RANE ONE', 'XDJ-RZ', 'DDJ REV 7'].map(t => (
+                {['HipHop & RnB', 'Afrobeats', 'Shatta', 'Amapiano'].map(g => (
                   <span
-                    key={t}
-                    className="font-heading font-bold text-xs tracking-wide uppercase text-dip-rose/65 bg-white/[0.04] border border-white/[0.07] px-3 py-1.5"
+                    key={g}
+                    className="font-heading font-bold text-xs tracking-wide uppercase text-dip-rose/80 bg-dip-red/[0.08] border border-dip-red/[0.22] rounded-full px-4 py-1.5"
                   >
-                    {t}
+                    {g}
                   </span>
                 ))}
               </div>
