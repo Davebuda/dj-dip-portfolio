@@ -27,8 +27,8 @@ function Portfolio() {
       <Nav />
       <Hero />
       <About />
-      <Highlights />
       <GalleryStrip />
+      <Highlights />
       <TechRider />
       <Booking />
       <Footer />
