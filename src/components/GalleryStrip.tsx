@@ -66,9 +66,8 @@ export default function GalleryStrip() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.25, duration: 0.6 }}
-            className="flex gap-3 gallery-scroll"
-            style={{ width: 'max-content' }}
           >
+            <div className="flex gap-3 gallery-scroll" style={{ width: 'max-content' }}>
             {repeated.map((item, i) => (
               <div
                 key={`${item.filename}-${i}`}
@@ -103,6 +102,7 @@ export default function GalleryStrip() {
                 )}
               </div>
             ))}
+            </div>
           </motion.div>
         </div>
       </section>
