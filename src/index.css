@@ -30,7 +30,7 @@
   h1, h2, h3 {
     font-family: 'Clash Display', system-ui, sans-serif;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
   h4, h5, h6 {
@@ -50,7 +50,7 @@
 @layer components {
   /* Eyebrow label */
   .label {
-    @apply text-[11px] font-heading font-bold tracking-[0.22em] uppercase text-dip-rose;
+    @apply text-[13px] font-heading font-bold tracking-[0.16em] uppercase text-dip-rose;
   }
 
   /* Divider */
@@ -104,19 +104,19 @@
 
   /* Red gradient CTA */
   .btn-brand {
-    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-7 py-3 rounded-full transition-all;
+    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-6 py-2.5 rounded-full transition-all;
     letter-spacing: 0.12em;
     background: linear-gradient(135deg, #E63020, #BF2D1E);
     color: #fff;
   }
   .btn-brand:hover {
-    box-shadow: 0 0 40px rgba(230, 48, 32, 0.65), 0 0 80px rgba(230, 48, 32, 0.25);
-    transform: scale(1.04);
+    box-shadow: 0 0 35px rgba(230, 48, 32, 0.55);
+    transform: scale(1.03);
   }
 
   /* White primary CTA */
   .btn-primary {
-    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-7 py-3 rounded-full bg-white text-black transition-all;
+    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-6 py-2.5 rounded-full bg-white text-black transition-all;
     letter-spacing: 0.12em;
   }
   .btn-primary:hover {
@@ -125,7 +125,7 @@
 
   /* Ghost outline */
   .btn-outline {
-    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-7 py-3 rounded-full border border-white/30 text-white transition-all;
+    @apply inline-flex items-center justify-center font-heading font-bold uppercase tracking-wider px-6 py-2.5 rounded-full border border-white/30 text-white transition-all;
     letter-spacing: 0.12em;
   }
   .btn-outline:hover {
@@ -151,27 +151,12 @@
     background-size: 200% auto;
     animation: shimmer 4s ease-in-out infinite;
   }
-
-  /* Genre ticker strip */
-  .genre-ticker {
-    display: inline-flex;
-    animation: genre-ticker-scroll 30s linear infinite;
-  }
-  .genre-ticker:hover {
-    animation-play-state: paused;
-  }
 }
 
 /* Shimmer animation */
 @keyframes shimmer {
   0%, 100% { background-position: 0% center; }
   50% { background-position: 100% center; }
-}
-
-/* Genre ticker scroll */
-@keyframes genre-ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 /* Marquee */

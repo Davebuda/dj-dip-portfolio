@@ -6,25 +6,21 @@ const genres = [
     num: '01',
     name: 'HipHop & RnB',
     desc: 'Heavy basslines, smooth transitions, and the pulse of urban culture. The foundation of every set.',
-    accent: '#E63020',
   },
   {
     num: '02',
     name: 'Afrobeats',
     desc: 'Afrobeats rhythms that connect continents and move dance floors. High energy, deep roots.',
-    accent: '#EAE600',
   },
   {
     num: '03',
     name: 'Shatta',
     desc: 'High-energy dancehall vibes rooted in Caribbean culture. The crowd never stops moving.',
-    accent: '#FF8C42',
   },
   {
     num: '04',
     name: 'Amapiano',
     desc: 'Log drums, soulful piano, and the spirit of South African nightlife. Deep, late-night energy.',
-    accent: '#4DE0D0',
   },
 ]
 
@@ -49,8 +45,7 @@ export default function Genres() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="font-display font-black text-dip-cream leading-none"
-              style={{ fontSize: 'clamp(5rem, 14vw, 12rem)', letterSpacing: '-0.04em' }}
+              className="font-display text-8xl md:text-[10rem] text-dip-cream leading-none"
             >
               GENRES
             </motion.h2>
@@ -65,47 +60,25 @@ export default function Genres() {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-px bg-white/[0.04]">
+        <div className="grid md:grid-cols-2 gap-px bg-dip-rose/10">
           {genres.map((genre, i) => (
             <motion.div
               key={genre.name}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.08 * i }}
-              className="bg-dip-dark p-10 md:p-14 group hover:bg-dip-card transition-colors duration-300 cursor-default relative overflow-hidden"
-              style={{ borderTop: `3px solid ${genre.accent}22` }}
+              className="bg-dip-dark p-10 md:p-14 group hover:bg-dip-card transition-colors duration-300 cursor-default"
             >
-              {/* Accent top bar on hover */}
-              <div
-                className="absolute top-0 left-0 w-0 h-[3px] group-hover:w-full transition-all duration-500"
-                style={{ background: genre.accent }}
-              />
-
-              <div className="flex items-start justify-between mb-6">
-                <span
-                  className="font-mono leading-none transition-colors duration-300"
-                  style={{
-                    fontSize: 'clamp(4rem, 10vw, 7rem)',
-                    color: `${genre.accent}28`,
-                  }}
-                >
-                  <span className="group-hover:opacity-70 transition-opacity duration-300 block"
-                    style={{ color: genre.accent }}>
-                    {genre.num}
-                  </span>
+              <div className="flex items-start justify-between mb-8">
+                <span className="font-mono text-6xl text-dip-red/25 group-hover:text-dip-red/55 transition-colors duration-300 leading-none">
+                  {genre.num}
                 </span>
-                <span
-                  className="w-2.5 h-2.5 rounded-full mt-4 transition-all duration-300 group-hover:scale-125"
-                  style={{ background: `${genre.accent}55`, boxShadow: `0 0 12px ${genre.accent}40` }}
-                />
+                <span className="w-2 h-2 rounded-full bg-dip-rose/40 mt-3 group-hover:bg-dip-rose transition-colors duration-300" />
               </div>
-              <h3
-                className="font-display font-black text-dip-cream tracking-tighter mb-4 leading-none group-hover:text-white transition-colors"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', letterSpacing: '-0.03em' }}
-              >
+              <h3 className="font-display text-5xl md:text-6xl text-dip-cream tracking-tight mb-5 leading-tight group-hover:text-white transition-colors">
                 {genre.name}
               </h3>
-              <p className="text-dip-muted font-body font-light leading-relaxed text-base group-hover:text-dip-cream/60 transition-colors duration-300">
+              <p className="text-dip-muted font-body font-light leading-relaxed text-base">
                 {genre.desc}
               </p>
             </motion.div>
