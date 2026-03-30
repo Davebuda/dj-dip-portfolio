@@ -21,12 +21,16 @@ export default function Nav() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-dip-black/90 backdrop-blur-md border-b border-white/[0.06]' : ''
+        scrolled ? 'bg-dip-black/92 backdrop-blur-md border-b border-white/[0.06]' : ''
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-display text-3xl tracking-wide text-dip-cream hover:text-dip-rose transition-colors">
+        <a
+          href="#"
+          className="font-display font-black tracking-tight text-dip-cream hover:text-dip-rose transition-colors"
+          style={{ fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', letterSpacing: '-0.03em' }}
+        >
           DJ DiP
         </a>
 
@@ -44,10 +48,7 @@ export default function Nav() {
         </div>
 
         {/* Desktop CTA */}
-        <a
-          href="#book"
-          className="hidden md:inline-flex btn-brand text-sm px-6 py-2.5"
-        >
+        <a href="#book" className="hidden md:inline-flex btn-brand text-sm px-6 py-2.5">
           Book Now
         </a>
 

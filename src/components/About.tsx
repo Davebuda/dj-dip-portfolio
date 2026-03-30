@@ -15,18 +15,18 @@ export default function About() {
   const content = useContent()
 
   return (
-    <section id="about" ref={ref} className="bg-dip-dark py-16 md:py-20 px-8 md:px-16">
+    <section id="about" ref={ref} className="bg-dip-dark py-20 md:py-28 px-8 md:px-16">
       <div className="max-w-7xl mx-auto">
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="label mb-8"
+          className="label mb-10"
         >
           The Artist
         </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
 
           {/* Left — quote + stats */}
           <div>
@@ -34,27 +34,38 @@ export default function About() {
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.15 }}
-              className="font-script text-4xl md:text-5xl text-dip-rose leading-tight mb-8"
+              className="font-script leading-tight mb-10"
+              style={{
+                fontSize: 'clamp(2.8rem, 7vw, 6rem)',
+                color: '#D44040',
+              }}
             >
-              "Dance Floor<br />is Too Smooth."
+              &ldquo;Dance Floor<br />is Too Smooth.&rdquo;
             </motion.blockquote>
 
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-3">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.25 + i * 0.08 }}
-                  className="p-4 border border-dip-rose/15 bg-dip-card group hover:border-dip-red/30 transition-colors"
+                  className="p-5 border border-dip-rose/15 bg-dip-card group hover:border-dip-red/35 transition-colors relative overflow-hidden"
                 >
+                  {/* Subtle yellow accent on hover */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-dip-yellow/0 via-dip-yellow/30 to-dip-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div
-                    className="font-display text-3xl mb-1 group-hover:opacity-90 transition-opacity"
-                    style={{ background: 'linear-gradient(135deg, #E63020, #D44040)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                    className="font-display font-black mb-2 group-hover:opacity-90 transition-opacity leading-none"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                      background: 'linear-gradient(135deg, #E63020, #D44040)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}
                   >
                     {stat.value}
                   </div>
-                  <div className="text-sm font-heading font-bold tracking-[0.1em] uppercase text-dip-muted leading-tight">
+                  <div className="text-xs font-heading font-bold tracking-[0.12em] uppercase text-dip-muted leading-tight">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -68,7 +79,10 @@ export default function About() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2 }}
           >
-            <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none mb-5">
+            <h2
+              className="font-display font-black text-dip-cream leading-none mb-6"
+              style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)', letterSpacing: '-0.04em' }}
+            >
               DAVIS<br />
               <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
             </h2>

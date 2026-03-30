@@ -45,13 +45,13 @@ export default function Highlights() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="events" ref={ref} className="bg-dip-card py-16 md:py-20 px-8 md:px-16">
+    <section id="events" ref={ref} className="bg-dip-card py-20 md:py-28 px-8 md:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="label mb-3"
+          className="label mb-4"
         >
           Highlights
         </motion.p>
@@ -60,7 +60,8 @@ export default function Highlights() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="font-display text-5xl md:text-6xl text-dip-cream leading-none mb-8"
+          className="font-display font-black text-dip-cream leading-none mb-12"
+          style={{ fontSize: 'clamp(4rem, 14vw, 11rem)', letterSpacing: '-0.04em' }}
         >
           STAGES
         </motion.h2>
@@ -72,29 +73,36 @@ export default function Highlights() {
               initial={{ opacity: 0, x: -24 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.06 * i }}
-              className={`group flex flex-col md:flex-row md:items-center justify-between py-5 border-b transition-all duration-300 ${
+              className={`group flex flex-col md:flex-row md:items-center justify-between py-6 border-b transition-all duration-300 ${
                 ev.featured
-                  ? 'border-dip-red/40 hover:border-dip-red'
+                  ? 'border-dip-yellow/40 hover:border-dip-yellow/70'
                   : 'border-dip-rose/10 hover:border-dip-rose/30'
               }`}
             >
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-6">
                 <span
-                  className={`font-mono text-base leading-none w-8 transition-colors duration-300 ${
-                    ev.featured ? 'text-dip-red' : 'text-dip-red/25 group-hover:text-dip-red/60'
+                  className={`font-mono text-base leading-none w-8 shrink-0 transition-colors duration-300 ${
+                    ev.featured ? 'text-dip-yellow' : 'text-dip-red/25 group-hover:text-dip-red/60'
                   }`}
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div>
                   <p
-                    className={`font-heading font-bold text-base md:text-lg transition-colors duration-300 ${
+                    className={`font-heading font-bold text-base md:text-xl transition-colors duration-300 ${
                       ev.featured ? 'text-white' : 'text-dip-cream group-hover:text-white'
                     }`}
                   >
                     {ev.venue}
                     {ev.featured && (
-                      <span className="ml-3 inline-block text-[11px] font-heading font-bold tracking-[0.16em] uppercase text-dip-red border border-dip-red/50 px-2 py-0.5 align-middle">
+                      <span
+                        className="ml-3 inline-block text-[10px] font-heading font-bold tracking-[0.2em] uppercase px-2.5 py-0.5 align-middle"
+                        style={{
+                          color: '#EAE600',
+                          border: '1px solid rgba(234,230,0,0.5)',
+                          background: 'rgba(234,230,0,0.06)',
+                        }}
+                      >
                         Resident
                       </span>
                     )}
@@ -105,7 +113,7 @@ export default function Highlights() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 mt-3 md:mt-0 ml-[52px] md:ml-0">
+              <div className="flex flex-wrap gap-1.5 mt-3 md:mt-0 ml-[56px] md:ml-0">
                 {ev.tags.map(tag => (
                   <span
                     key={tag}
