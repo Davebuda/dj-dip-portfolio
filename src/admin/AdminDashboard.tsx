@@ -12,8 +12,8 @@ export default function AdminDashboard() {
   }, [token])
 
   const cards = [
-    { label: 'Gallery Photos', value: galleryCount ?? '…', href: '/admin/gallery', action: 'Manage →' },
-    { label: 'Bio & Content',  value: 'Edit',               href: '/admin/content', action: 'Open →' },
+    { label: 'Gallery Photos', value: galleryCount ?? '…', href: '/builder/gallery', action: 'Manage →' },
+    { label: 'Bio & Content',  value: 'Edit',               href: '/builder/content', action: 'Open →' },
     { label: 'Live Site',      value: 'djdip.no',           href: '/',              action: 'View ↗', external: true },
   ]
 

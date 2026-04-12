@@ -43,8 +43,8 @@ export default function App() {
       <Route path="/" element={<Portfolio />} />
 
       {/* Admin */}
-      <Route path="/admin" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/builder" element={<AdminLogin />} />
+      <Route path="/builder" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="gallery"   element={<AdminGallery />} />
         <Route path="content"   element={<AdminContent />} />

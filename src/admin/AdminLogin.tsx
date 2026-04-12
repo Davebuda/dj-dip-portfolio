@@ -20,7 +20,7 @@ export default function AdminLogin() {
       if (res.ok) {
         const { token } = await res.json()
         sessionStorage.setItem('admin-token', token)
-        navigate('/admin/dashboard')
+        navigate('/builder/dashboard')
       } else {
         setError('Wrong password.')
       }

@@ -2,9 +2,9 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 
 const nav = [
-  { to: '/admin/dashboard', label: 'Dashboard' },
-  { to: '/admin/gallery',   label: 'Gallery' },
-  { to: '/admin/content',   label: 'Content' },
+  { to: '/builder/dashboard', label: 'Dashboard' },
+  { to: '/builder/gallery',   label: 'Gallery' },
+  { to: '/builder/content',   label: 'Content' },
 ]
 
 export default function AdminLayout() {
@@ -12,12 +12,12 @@ export default function AdminLayout() {
   const token = sessionStorage.getItem('admin-token')
 
   useEffect(() => {
-    if (!token) navigate('/admin')
+    if (!token) navigate('/builder')
   }, [token, navigate])
 
   function logout() {
     sessionStorage.removeItem('admin-token')
-    navigate('/admin')
+    navigate('/builder')
   }
 
   return (
