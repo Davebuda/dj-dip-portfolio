@@ -71,7 +71,7 @@ export default function GalleryStrip() {
                   <>
                     <img
                       src={item.url}
-                      alt=""
+                      alt={`DJ DiP live performance photo`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                     />
@@ -119,7 +119,7 @@ export default function GalleryStrip() {
               ) : (
                 <img
                   src={lightbox.url}
-                  alt=""
+                  alt="DJ DiP live performance photo"
                   className="max-w-full max-h-[88vh] object-contain rounded-2xl"
                 />
               )}

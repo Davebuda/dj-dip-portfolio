@@ -83,7 +83,7 @@ export default function Hero() {
               className="mt-5"
             >
               {/* DJ DiP — one colour, KlubN scale */}
-              <div className="leading-none">
+              <h1 className="leading-none">
                 <span
                   className="font-display text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none"
                   style={{
@@ -94,13 +94,11 @@ export default function Hero() {
                 >
                   DJ DiP
                 </span>
-              </div>
-              {/* DAVIS */}
-              <div className="leading-none mt-1">
-                <span className="font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white">
+                {/* DAVIS */}
+                <span className="block font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white mt-1">
                   DAVIS
                 </span>
-              </div>
+              </h1>
               <p className="label mt-4">Resident DJ · KlubN · Oslo, Norway</p>
             </motion.div>
 
