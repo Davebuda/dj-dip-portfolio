@@ -1,12 +1,97 @@
 import { useEffect, useState } from 'react'
 
+/* ------------------------------------------------------------------ *
+ * Shared content interfaces
+ *
+ * These are the single source of truth for every editable section.
+ * Public components import these (no local re-declaration) and the
+ * admin UI builds its payload against the same shapes. The admin
+ * server (admin-server/server.js) does NOT enforce a schema — it just
+ * writes the posted JSON to data/content.json — so adding fields here
+ * requires NO server change.
+ * ------------------------------------------------------------------ */
+
+export interface TracklistEntry {
+  time: string
+  title: string
+}
+
+export interface Mix {
+  id: string
+  title: string
+  venue: string
+  genreTags: string[]
+  duration: string
+  bpm: string
+  soundcloudUrl: string
+  tracklist: TracklistEntry[]
+}
+
+export interface DjEvent {
+  /** ISO date, e.g. '2026-06-14'. Used for sort + past-hiding. */
+  date: string
+  venue: string
+  city: string
+  /** Optional ticket / RSVP URL. Omit for free-entry / DM-only nights. */
+  ticketUrl?: string
+  /** Optional status label, e.g. 'Free entry' / 'Sold out'. */
+  status?: string
+}
+
+export interface Reel {
+  id: string
+  /** Self-hosted clip, e.g. '/reels/klubn-night.mp4'. */
+  src: string
+  /** Poster image (WebP/AVIF/jpg). */
+  poster: string
+  /** Accessible description of the clip. */
+  caption: string
+}
+
+export interface ProofItem {
+  /** Venue / promoter name — always present, used as text wordmark + alt. */
+  name: string
+  /** Optional logo path, e.g. '/logos/klubn.svg'. Falls back to the name. */
+  logo?: string
+}
+
+export interface Quote {
+  text: string
+  attribution: string
+}
+
+export interface Genre {
+  num: string
+  name: string
+  desc: string
+}
+
+export interface Highlight {
+  venue: string
+  event: string
+  tags: string[]
+  featured: boolean
+}
+
 export interface Content {
   bio: string
   bio2: string
   stages: string[]
+  /** Chip list (Hero) — string[]. Distinct from the `genreCards` below. */
   genres: string[]
   contact: { email: string; phone: string }
   social: { instagram: string; soundcloud: string; tiktok: string }
+
+  /* --- Rebuilt, fully-editable sections (all optional) --- */
+  mixes?: Mix[]
+  events?: DjEvent[]
+  reels?: Reel[]
+  proof?: ProofItem[]
+  quote?: Quote | null
+  epkAvailable?: boolean
+  /** {num,name,desc} cards for the Genres section — new key to avoid clashing with `genres` chips. */
+  genreCards?: Genre[]
+  highlights?: Highlight[]
 }
 
 export const DEFAULTS: Content = {
@@ -16,6 +101,31 @@ export const DEFAULTS: Content = {
   genres: ['HipHop & RnB', 'Afrobeats', 'Shatta', 'Amapiano', 'Dancehall'],
   contact: { email: '2djdip@gmail.com', phone: '+47 967 36 112' },
   social: { instagram: 'dj_dip', soundcloud: 'bukenya-davis', tiktok: 'dj_dip' },
+
+  // Honest-by-default: empty arrays render the truthful empty-states.
+  mixes: [],
+  events: [],
+  reels: [],
+  proof: [],
+  quote: null,
+  epkAvailable: false,
+
+  // Seeded with the CURRENT hardcoded values so the site looks identical
+  // until the artist edits them in admin.
+  genreCards: [
+    { num: '01', name: 'HipHop & RnB', desc: 'Urban pulse — the foundation of every set.' },
+    { num: '02', name: 'Afrobeats', desc: 'Rhythms that move continents.' },
+    { num: '03', name: 'Shatta', desc: 'High-energy Caribbean dancehall.' },
+    { num: '04', name: 'Amapiano', desc: 'Log drums, late-night soul.' },
+  ],
+  highlights: [
+    { venue: 'KlubN', event: 'Resident DJ · Event Architect · Concept Builder', tags: ['Urban Sound Fusion', 'Oslo'], featured: true },
+    { venue: 'Gamba Beat Bar', event: 'Content Party', tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'], featured: false },
+    { venue: "Kiki's House", event: 'Club Night', tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'], featured: false },
+    { venue: 'Old School Vibe', event: 'Throwback Night', tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'], featured: false },
+    { venue: 'Faksen Bar', event: 'Amapiano Scene', tags: ['Amapiano', 'Afro-House', 'Gqom'], featured: false },
+    { venue: 'Faksen Bar', event: 'Content Party', tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'], featured: false },
+  ],
 }
 
 export function useContent(): Content {
@@ -40,6 +150,18 @@ export function useContent(): Content {
             soundcloud: d.social?.soundcloud || DEFAULTS.social.soundcloud,
             tiktok: d.social?.tiktok || DEFAULTS.social.tiktok,
           },
+          // New sections: use stored value when present (including a stored
+          // empty array, which is a meaningful "cleared" state), else default.
+          mixes: Array.isArray(d.mixes) ? d.mixes : DEFAULTS.mixes,
+          events: Array.isArray(d.events) ? d.events : DEFAULTS.events,
+          reels: Array.isArray(d.reels) ? d.reels : DEFAULTS.reels,
+          proof: Array.isArray(d.proof) ? d.proof : DEFAULTS.proof,
+          quote: d.quote === undefined ? DEFAULTS.quote : d.quote,
+          epkAvailable: typeof d.epkAvailable === 'boolean' ? d.epkAvailable : DEFAULTS.epkAvailable,
+          // genreCards/highlights fall back to the SEEDED defaults so the site
+          // looks identical until they are edited (never blank).
+          genreCards: d.genreCards?.length ? d.genreCards : DEFAULTS.genreCards,
+          highlights: d.highlights?.length ? d.highlights : DEFAULTS.highlights,
         })
       })
       .catch(() => {})

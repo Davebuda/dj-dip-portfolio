@@ -1,5 +1,4 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
 import { useContent } from '../hooks/useContent'
 
 const stats = [
@@ -10,42 +9,30 @@ const stats = [
 ]
 
 export default function About() {
-  const ref = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
   const content = useContent()
 
   return (
-    <section id="about" ref={ref} className="bg-dip-dark py-16 md:py-20 px-8 md:px-16">
+    <section id="about" className="bg-dip-dark py-16 md:py-20 px-8 md:px-16 overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="label mb-8"
-        >
-          The Artist
-        </motion.p>
+        <Reveal>
+          <p className="label mb-8">The Artist</p>
+        </Reveal>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
 
           {/* Left — quote + stats */}
           <div>
-            <motion.blockquote
-              initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.9, delay: 0.15 }}
-              className="font-script text-4xl md:text-5xl text-dip-rose leading-tight mb-8"
-            >
-              "Dance Floor<br />is Too Smooth."
-            </motion.blockquote>
+            <Reveal delay={0.1}>
+              <blockquote className="font-display italic text-4xl md:text-5xl text-dip-rose leading-tight mb-8">
+                "Dance Floor<br />is Too Smooth."
+              </blockquote>
+            </Reveal>
 
-            <div className="grid grid-cols-2 gap-2.5">
-              {stats.map((stat, i) => (
-                <motion.div
+            <RevealGroup className="grid grid-cols-2 gap-2.5">
+              {stats.map(stat => (
+                <RevealItem
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.25 + i * 0.08 }}
                   className="p-4 border border-dip-rose/15 bg-dip-card group hover:border-dip-red/30 transition-colors"
                 >
                   <div
@@ -54,23 +41,22 @@ export default function About() {
                   >
                     {stat.value}
                   </div>
-                  <div className="text-sm font-heading font-bold tracking-[0.1em] uppercase text-dip-muted leading-tight">
+                  <div className="text-sm font-heading font-bold tracking-[0.1em] uppercase text-dip-text-muted leading-tight">
                     {stat.label}
                   </div>
-                </motion.div>
+                </RevealItem>
               ))}
-            </div>
+            </RevealGroup>
           </div>
 
           {/* Right — bio */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2 }}
-          >
+          <Reveal delay={0.15}>
             <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none mb-5">
-              DAVIS<br />
-              <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
+              <span className="sr-only">About Davis "DiP"</span>
+              <span aria-hidden="true">
+                DAVIS<br />
+                <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
+              </span>
             </h2>
 
             <p className="text-dip-cream/70 font-body font-light leading-relaxed text-base">
@@ -88,21 +74,21 @@ export default function About() {
                 href="https://instagram.com/dj_dip"
                 target="_blank"
                 rel="noreferrer"
-                className="label hover:text-dip-cream transition-colors"
+                className="label inline-flex items-center min-h-[44px] hover:text-dip-cream transition-colors"
               >
                 @dj_dip
               </a>
-              <span className="w-px h-4 bg-dip-rose/20" />
+              <span className="w-px h-4 bg-dip-rose/20" aria-hidden="true" />
               <a
                 href="https://instagram.com/klub_n_oslo"
                 target="_blank"
                 rel="noreferrer"
-                className="label hover:text-dip-cream transition-colors"
+                className="label inline-flex items-center min-h-[44px] hover:text-dip-cream transition-colors"
               >
                 @klub_n_oslo
               </a>
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

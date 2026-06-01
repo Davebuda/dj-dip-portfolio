@@ -6,16 +6,21 @@
     <link rel="apple-touch-icon" href="/images/dip-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DJ DiP — Urban Sound Fusion | Oslo DJ &amp; Event Architect</title>
-    <meta name="description" content="DJ DiP — Prime-time, high-energy sets rooted in Urban Sound Fusion. HipHop &amp; RnB, Afrobeats, Shatta, Amapiano. Oslo-based DJ &amp; Event Architect. Booking &amp; Press Kit." />
+    <meta name="description" content="DJ DiP — Oslo-based DJ &amp; Event Architect. Prime-time, high-energy Urban Sound Fusion: HipHop &amp; RnB, Afrobeats, Shatta, Amapiano. Booking &amp; press kit." />
     <link rel="canonical" href="https://djdip.no/" />
+
+    <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="DJ DiP — Urban Sound Fusion" />
     <meta property="og:description" content="Prime-time, high-energy sets rooted in Urban Sound Fusion. Based in Oslo. HipHop &amp; RnB, Afrobeats, Shatta, Amapiano." />
     <meta property="og:url" content="https://djdip.no/" />
+    <!-- TODO(og-image): confirm /images/hero.png is 1200×630. If it is not, export a 1200×630 OG image, update this URL, and add og:image:width=1200 / og:image:height=630. Dimensions intentionally omitted until verified (do not assert unverified sizes). -->
     <meta property="og:image" content="https://djdip.no/images/hero.png" />
+    <meta property="og:image:alt" content="DJ DiP — Oslo DJ & Event Architect" />
     <meta property="og:site_name" content="DJ DiP" />
+    <meta property="og:locale" content="en_US" />
     <meta property="profile:username" content="djdip" />
 
     <!-- Twitter Card -->
@@ -24,26 +29,58 @@
     <meta name="twitter:description" content="Prime-time, high-energy sets rooted in Urban Sound Fusion. Based in Oslo." />
     <meta name="twitter:image" content="https://djdip.no/images/hero.png" />
 
-    <!-- JSON-LD: Person -->
+    <!-- JSON-LD: Person + MusicGroup (the performing act).
+         Event schema is intentionally omitted while there are no announced public
+         dates — emitting empty Event objects would be invalid/misleading. Add an
+         "event" array to the MusicGroup (or standalone Event items) once the
+         content store exposes real dated events. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "DJ DiP",
-      "jobTitle": "DJ & Event Architect",
-      "description": "Prime-time, high-energy DJ based in Oslo. Specialising in Urban Sound Fusion — HipHop & RnB, Afrobeats, Shatta, Amapiano.",
-      "url": "https://djdip.no",
-      "image": "https://djdip.no/images/dip-portrait.png",
-      "knowsAbout": ["HipHop", "RnB", "Afrobeats", "Shatta", "Amapiano", "Urban Sound Fusion"],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Oslo",
-        "addressCountry": "NO"
-      },
-      "sameAs": [
-        "https://www.instagram.com/dj_dip",
-        "https://soundcloud.com/bukenya-davis",
-        "https://www.tiktok.com/@dj_dip"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://djdip.no/#person",
+          "name": "DJ DiP",
+          "jobTitle": "DJ & Event Architect",
+          "description": "Prime-time, high-energy DJ based in Oslo. Specialising in Urban Sound Fusion — HipHop & RnB, Afrobeats, Shatta, Amapiano.",
+          "url": "https://djdip.no",
+          "image": "https://djdip.no/images/dip-portrait.png",
+          "knowsAbout": ["HipHop", "RnB", "Afrobeats", "Shatta", "Amapiano", "Urban Sound Fusion"],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Oslo",
+            "addressCountry": "NO"
+          },
+          "sameAs": [
+            "https://www.instagram.com/dj_dip",
+            "https://soundcloud.com/bukenya-davis",
+            "https://www.tiktok.com/@dj_dip"
+          ]
+        },
+        {
+          "@type": "MusicGroup",
+          "@id": "https://djdip.no/#act",
+          "name": "DJ DiP",
+          "url": "https://djdip.no",
+          "image": "https://djdip.no/images/dip-portrait.png",
+          "description": "Oslo-based DJ delivering prime-time Urban Sound Fusion — HipHop & RnB, Afrobeats, Shatta, Amapiano, Dancehall.",
+          "genre": ["HipHop", "RnB", "Afrobeats", "Shatta", "Amapiano", "Dancehall", "Urban Sound Fusion"],
+          "member": { "@id": "https://djdip.no/#person" },
+          "foundingLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Oslo",
+              "addressCountry": "NO"
+            }
+          },
+          "sameAs": [
+            "https://www.instagram.com/dj_dip",
+            "https://soundcloud.com/bukenya-davis",
+            "https://www.tiktok.com/@dj_dip"
+          ]
+        }
       ]
     }
     </script>
@@ -55,13 +92,21 @@
       rel="stylesheet"
     />
 
-    <!-- DM Mono + Permanent Marker via Google Fonts -->
+    <!-- DM Mono via Google Fonts (Permanent Marker removed — off the type allowlist) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Reveal safety net: if JS is disabled or the IntersectionObserver never fires,
+         force all reveal-wrapped content fully visible so no section can stay blank. -->
+    <noscript>
+      <style>
+        [data-reveal] { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

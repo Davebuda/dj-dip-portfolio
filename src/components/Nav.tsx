@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 
+// Only sections that actually render — no dead links. Capped at 6 for 375px.
+// Tech Rider is reachable from the Booking section / footer, not primary nav.
 const links = [
-  { label: 'About',  href: '#about' },
-  { label: 'Sound',  href: '#sound' },
-  { label: 'Events', href: '#events' },
-  { label: 'Tech',   href: '#tech-rider' },
-  { label: 'Book',   href: '#book' },
+  { label: 'Sound',   href: '#sound' },
+  { label: 'Mixes',   href: '#mixes' },
+  { label: 'Dates',   href: '#dates' },
+  { label: 'Reels',   href: '#reels' },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Book',    href: '#book' },
 ]
 
 export default function Nav() {
@@ -36,7 +39,7 @@ export default function Nav() {
             <a
               key={link.label}
               href={link.href}
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
+              className="font-heading font-bold text-sm tracking-[0.2em] uppercase text-dip-text-muted hover:text-dip-cream transition-colors"
             >
               {link.label}
             </a>
@@ -53,9 +56,10 @@ export default function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-1"
+          className="md:hidden flex flex-col items-center justify-center gap-1.5 w-11 h-11"
           onClick={() => setMenuOpen(v => !v)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span className={`block w-6 h-px bg-dip-cream transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
           <span className={`block w-6 h-px bg-dip-cream transition-all ${menuOpen ? 'opacity-0' : ''}`} />
@@ -71,7 +75,7 @@ export default function Nav() {
               key={link.label}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-heading font-bold text-base tracking-[0.2em] uppercase text-dip-muted hover:text-dip-cream transition-colors"
+              className="font-heading font-bold text-base tracking-[0.2em] uppercase text-dip-text-muted hover:text-dip-cream transition-colors flex items-center min-h-[44px]"
             >
               {link.label}
             </a>
