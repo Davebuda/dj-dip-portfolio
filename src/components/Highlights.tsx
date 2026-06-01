@@ -41,14 +41,19 @@ const events = [
 
 export default function Highlights() {
   return (
-    <section id="events" className="bg-dip-card py-16 md:py-20 px-8 md:px-16 overflow-x-hidden">
+    <section id="stages" className="bg-dip-card py-16 md:py-20 px-8 md:px-16 overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
 
-        <Reveal className="mb-8">
-          <p className="label mb-3">Highlights</p>
-          <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">
-            STAGES
-          </h2>
+        <Reveal className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-8">
+          <div className="flex items-baseline gap-4">
+            <p className="label">Residencies</p>
+            <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">
+              STAGES
+            </h2>
+          </div>
+          <p className="text-dip-text-muted font-body font-light text-sm max-w-xs sm:text-right leading-relaxed">
+            Resident sets · club nights · private events.
+          </p>
         </Reveal>
 
         <RevealGroup stagger={0.06}>

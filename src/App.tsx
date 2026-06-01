@@ -4,8 +4,11 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Genres from './components/Genres'
 import Mixes from './components/Mixes'
+import Dates from './components/Dates'
 import Highlights from './components/Highlights'
 import GalleryStrip from './components/GalleryStrip'
+import Reels from './components/Reels'
+import SocialProof from './components/SocialProof'
 import TechRider from './components/TechRider'
 import Booking from './components/Booking'
 import Footer from './components/Footer'
@@ -32,8 +35,11 @@ function Portfolio() {
         <About />
         <Genres />
         <Mixes />
-        <GalleryStrip />
+        <Dates />
         <Highlights />
+        <GalleryStrip />
+        <Reels />
+        <SocialProof />
         <TechRider />
         <Booking />
       </main>

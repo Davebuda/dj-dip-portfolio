@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 
-// Only sections that actually render this increment — no dead links.
-// (Reels / Dates will join once those sections are built.)
+// Only sections that actually render — no dead links. Capped at 6 for 375px.
+// Tech Rider is reachable from the Booking section / footer, not primary nav.
 const links = [
-  { label: 'About',   href: '#about' },
   { label: 'Sound',   href: '#sound' },
   { label: 'Mixes',   href: '#mixes' },
+  { label: 'Dates',   href: '#dates' },
+  { label: 'Reels',   href: '#reels' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Tech',    href: '#tech-rider' },
   { label: 'Book',    href: '#book' },
 ]
 
