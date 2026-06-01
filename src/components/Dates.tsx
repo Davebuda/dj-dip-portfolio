@@ -1,5 +1,5 @@
 import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
-import { useContent } from '../hooks/useContent'
+import { useContent, type DjEvent } from '../hooks/useContent'
 
 /**
  * Upcoming Gigs / Dates (#dates)
@@ -16,25 +16,10 @@ import { useContent } from '../hooks/useContent'
  * CONTENT-STORE SWAP PATH (mirrors Mixes.tsx):
  *   `useContent()` does not yet expose `events`. When the admin server / content
  *   API adds an `events[]` field, extend the `Content` interface + `DEFAULTS` in
- *   src/hooks/useContent.ts with `events: DjEvent[]`, then replace the local
- *   `EVENTS` constant here with `const { events } = useContent()`. The `DjEvent`
- *   shape below is kept compatible with that future field.
+ *   src/hooks/useContent.ts (the `DjEvent` interface + `events` field now live
+ *   there) and read it via `const { events = [] } = useContent()`. Empty array
+ *   renders the honest empty-state.
  */
-
-export interface DjEvent {
-  /** ISO date, e.g. '2026-06-14'. Used for sort + past-hiding. */
-  date: string
-  venue: string
-  city: string
-  /** Optional ticket / RSVP URL. Omit for free-entry / DM-only nights. */
-  ticketUrl?: string
-  /** Optional status label, e.g. 'Free entry' / 'Sold out'. */
-  status?: string
-}
-
-// Intentionally empty until the artist supplies real dates. Shape kept
-// compatible with a future content-store `events[]`.
-const EVENTS: DjEvent[] = []
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
@@ -57,8 +42,8 @@ function upcoming(events: DjEvent[]): DjEvent[] {
 }
 
 export default function Dates() {
-  const { social } = useContent()
-  const events = upcoming(EVENTS)
+  const { social, events: allEvents = [] } = useContent()
+  const events = upcoming(allEvents)
   const hasDates = events.length > 0
 
   return (

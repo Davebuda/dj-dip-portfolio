@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { FaTiktok } from 'react-icons/fa6'
 import Reveal from './ui/Reveal'
-import { useContent } from '../hooks/useContent'
+import { useContent, type Reel } from '../hooks/useContent'
 
 /**
  * Reels / Video (#reels)
@@ -19,23 +19,10 @@ import { useContent } from '../hooks/useContent'
  *
  * Honest by default: ships with NO fabricated reels. The `REELS` placeholder
  * array is empty — renders a truthful empty-state until the artist supplies real
- * clips. CONTENT-STORE SWAP PATH mirrors Mixes/Dates: add `reels[]` to
- * Content/DEFAULTS in src/hooks/useContent.ts, then swap `REELS` for
- * `const { reels } = useContent()`. Drop the mp4/poster files in public/reels/.
+ * clips. The `Reel` interface + `reels` field live in src/hooks/useContent.ts;
+ * read via `const { reels = [] } = useContent()`. Clip/poster URLs are supplied
+ * through the admin gallery upload flow (public/uploads or public/reels/).
  */
-
-export interface Reel {
-  id: string
-  /** Self-hosted clip, e.g. '/reels/klubn-night.mp4'. */
-  src: string
-  /** Poster image (WebP/AVIF/jpg), e.g. '/reels/klubn-night.webp'. */
-  poster: string
-  /** Accessible description of the clip. */
-  caption: string
-}
-
-// Intentionally empty until the artist supplies real clips.
-const REELS: Reel[] = []
 
 const CARD_W = 240 // px — 9:16 card; height derived via aspect-[9/16]
 
@@ -111,8 +98,8 @@ function ReelCard({ reel }: { reel: Reel }) {
 }
 
 export default function Reels() {
-  const { social } = useContent()
-  const hasReels = REELS.length > 0
+  const { social, reels = [] } = useContent()
+  const hasReels = reels.length > 0
 
   return (
     <section id="reels" className="bg-dip-black py-16 md:py-20 overflow-x-hidden border-t border-dip-rose/10">
@@ -134,7 +121,7 @@ export default function Reels() {
         // overflow-x-auto on the TRACK (not the page); section is overflow-x-hidden.
         <div className="w-full overflow-x-auto overflow-y-hidden">
           <ul className="flex gap-4 snap-x snap-mandatory list-none m-0 px-8 md:px-16 pb-2 w-max">
-            {REELS.map(reel => (
+            {reels.map(reel => (
               <ReelCard key={reel.id} reel={reel} />
             ))}
           </ul>

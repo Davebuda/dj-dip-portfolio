@@ -1,4 +1,5 @@
 import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
+import { useContent } from '../hooks/useContent'
 
 /**
  * Social Proof (#trusted) — deliberately SMALL.
@@ -6,31 +7,16 @@ import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
  * A quiet credibility strip: venue / promoter names (or logos when supplied) +
  * at most ONE short pull-quote. Not a hero section, no carousel, no star ratings.
  *
- * Honest by default: ships with NO fabricated testimonials. `PROOF` is the
- * placeholder array — empty ships the honest empty-state. If only names exist
- * (no logo files yet), they render as text wordmarks. We never invent a quote.
- *
- * CONTENT-STORE SWAP PATH (mirrors Mixes/Dates/Reels): add `proof[]` to
- * Content/DEFAULTS in src/hooks/useContent.ts and swap the local `PROOF`
- * constant. Optional logo files go in public/logos/ and populate `logo`.
+ * Honest by default: ships with NO fabricated testimonials. `proof`/`quote`
+ * come from the content store (src/hooks/useContent.ts) and default to
+ * empty/null — the honest empty-state renders until the artist adds real ones.
+ * If only names exist (no logo files yet), they render as text wordmarks.
+ * Logos are uploaded via the admin gallery flow.
  */
 
-export interface ProofItem {
-  /** Venue / promoter name — always present, used as the text wordmark + alt. */
-  name: string
-  /** Optional logo path, e.g. '/logos/klubn.svg'. Falls back to the name text. */
-  logo?: string
-}
-
-// Intentionally empty until the artist supplies real venues/logos.
-const PROOF: ProofItem[] = []
-
-// At most one short, REAL quote. Empty until a genuine quote is provided —
-// never fabricated.
-const QUOTE: { text: string; attribution: string } | null = null
-
 export default function SocialProof() {
-  const hasProof = PROOF.length > 0
+  const { proof = [], quote = null } = useContent()
+  const hasProof = proof.length > 0
 
   if (!hasProof) {
     // HONEST empty-state — small and quiet, no fabricated credibility.
@@ -65,7 +51,7 @@ export default function SocialProof() {
           stagger={0.05}
           className="flex flex-wrap items-center gap-x-8 gap-y-4 md:gap-x-12"
         >
-          {PROOF.map(item => (
+          {proof.map(item => (
             <RevealItem key={item.name} className="flex items-center">
               {item.logo ? (
                 <img
@@ -86,14 +72,14 @@ export default function SocialProof() {
           ))}
         </RevealGroup>
 
-        {QUOTE && (
+        {quote && quote.text && (
           <Reveal delay={0.1} className="mt-8 max-w-2xl">
             <blockquote className="border-l-2 border-dip-red/50 pl-5">
               <p className="font-body text-lg text-dip-cream/90 leading-relaxed italic">
-                “{QUOTE.text}”
+                “{quote.text}”
               </p>
               <footer className="mt-2 font-mono text-xs text-dip-text-muted not-italic">
-                — {QUOTE.attribution}
+                — {quote.attribution}
               </footer>
             </blockquote>
           </Reveal>

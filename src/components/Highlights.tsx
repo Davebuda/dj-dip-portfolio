@@ -1,45 +1,15 @@
 import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
+import { useContent } from '../hooks/useContent'
 
-const events = [
-  {
-    venue: 'KlubN',
-    event: 'Resident DJ · Event Architect · Concept Builder',
-    tags: ['Urban Sound Fusion', 'Oslo'],
-    featured: true,
-  },
-  {
-    venue: 'Gamba Beat Bar',
-    event: 'Content Party',
-    tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'],
-    featured: false,
-  },
-  {
-    venue: "Kiki's House",
-    event: 'Club Night',
-    tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'],
-    featured: false,
-  },
-  {
-    venue: 'Old School Vibe',
-    event: 'Throwback Night',
-    tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'],
-    featured: false,
-  },
-  {
-    venue: 'Faksen Bar',
-    event: 'Amapiano Scene',
-    tags: ['Amapiano', 'Afro-House', 'Gqom'],
-    featured: false,
-  },
-  {
-    venue: 'Faksen Bar',
-    event: 'Content Party',
-    tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'],
-    featured: false,
-  },
-]
-
+/**
+ * Residencies / Stages.
+ * Rows come from the content store (`highlights`, editable in admin). Seeded
+ * with the original hardcoded venues so the section looks identical until
+ * edited; falls back to [] only if a stored value is explicitly empty.
+ */
 export default function Highlights() {
+  const { highlights: events = [] } = useContent()
+
   return (
     <section id="stages" className="bg-dip-card py-16 md:py-20 px-8 md:px-16 overflow-x-hidden">
       <div className="max-w-7xl mx-auto">

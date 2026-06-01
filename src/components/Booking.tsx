@@ -4,15 +4,15 @@ import { useContent } from '../hooks/useContent'
 
 /**
  * EPK download state.
- * Set EPK_AVAILABLE to true and drop the PDF at public/epk/dj-dip-epk.pdf once
- * the press kit exists. Until then we render an honest "coming soon" disabled
+ * The `epkAvailable` flag is editable in admin. Toggle it on (and drop the PDF
+ * at public/epk/dj-dip-epk.pdf, or upload it via the admin gallery) once the
+ * press kit exists. Until then we render an honest "coming soon" disabled
  * state — never a link to a 404.
  */
-const EPK_AVAILABLE = false
 const EPK_HREF = '/epk/dj-dip-epk.pdf'
 
 export default function Booking() {
-  const { contact: { email, phone } } = useContent()
+  const { contact: { email, phone }, epkAvailable = false } = useContent()
 
   return (
     <section id="book" className="relative py-20 px-8 md:px-16 overflow-hidden">
@@ -42,7 +42,7 @@ export default function Booking() {
 
         {/* EPK download — real link when the PDF exists, honest disabled state otherwise. */}
         <Reveal delay={0.15} className="mt-6">
-          {EPK_AVAILABLE ? (
+          {epkAvailable ? (
             <a
               href={EPK_HREF}
               download

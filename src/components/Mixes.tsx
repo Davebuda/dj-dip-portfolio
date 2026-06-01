@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FaSoundcloud } from 'react-icons/fa6'
 import Reveal from './ui/Reveal'
-import { useContent } from '../hooks/useContent'
+import { useContent, type Mix } from '../hooks/useContent'
 
 /**
  * Mixes / Music — the #1 content gap for a working DJ.
@@ -40,27 +40,6 @@ function loadSoundCloudApi(): Promise<void> {
   })
   return scLoaderPromise
 }
-
-interface TracklistEntry {
-  time: string
-  title: string
-}
-
-interface Mix {
-  id: string
-  title: string
-  venue: string
-  genreTags: string[]
-  duration: string
-  bpm: string
-  soundcloudUrl: string
-  tracklist: TracklistEntry[]
-}
-
-// Intentionally empty until the artist supplies real sets.
-// Shape kept compatible with a future content-store `mixes[]` and a later
-// swap to self-hosted mp3 excerpts.
-const MIXES: Mix[] = []
 
 const WAVE_BARS = 32
 
@@ -231,10 +210,11 @@ function MixPlayer({ mix }: { mix: Mix }) {
 }
 
 export default function Mixes() {
-  const { social } = useContent()
-  const [selectedId, setSelectedId] = useState(MIXES[0]?.id ?? null)
-  const selected = MIXES.find(m => m.id === selectedId) ?? null
-  const hasMixes = MIXES.length > 0
+  const { social, mixes = [] } = useContent()
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  // Default selection follows the loaded mixes (store hydrates after mount).
+  const selected = mixes.find(m => m.id === selectedId) ?? mixes[0] ?? null
+  const hasMixes = mixes.length > 0
 
   return (
     <section id="mixes" className="bg-dip-black py-24 md:py-32 px-8 md:px-16 overflow-x-hidden">
@@ -251,8 +231,9 @@ export default function Mixes() {
             {/* Set list */}
             <Reveal>
               <ul className="space-y-2">
-                {MIXES.map((mix, i) => {
-                  const active = mix.id === selectedId
+                {mixes.map((mix, i) => {
+                  const activeId = selected?.id
+                  const active = mix.id === activeId
                   return (
                     <li key={mix.id}>
                       <button
