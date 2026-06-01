@@ -7,80 +7,147 @@ function isVideo(filename: string) {
   return /\.(mp4|mov|webm|ogg)$/i.test(filename)
 }
 
+/**
+ * Static fallback sourced from public/images/gallery/*.
+ * Guarantees the gallery section ALWAYS renders real content even when
+ * /admin-api/gallery is empty, down, or unreachable (fixes the blank-gallery
+ * + blank-section defect — this section must never return null).
+ */
+const FALLBACK_ITEMS: GalleryItem[] = [
+  '109d4f51-c8d6-4774-9ccb-ee1b4549b46d.jpg',
+  '1ceadf56-22f4-4ffd-a9d0-cf70b46f21df.jpg',
+  '5ba4650a-c55b-4804-8e8a-d30e3c2cf265.jpg',
+  '752d80c8-6e2e-4af0-8544-98108bbab5fa.jpg',
+  '87705e9b-de73-4f18-bc06-fa2ea61ad4ad.jpg',
+  '8e39e7af-9f21-4d03-adc9-fc146fe094a3.jpg',
+  '99abec8a-1363-4e1d-b327-b60e35ce5b67.jpg',
+  'b69c3576-6931-4bea-bae0-c9859c7aa750.jpg',
+  'bb1f9178-7168-4b4f-8726-e3d7b81900a0.jpg',
+  'c9944a7a-3c83-4d27-b8af-c85dab8df88b.jpg',
+  'd3cdcef1-94b1-45f6-9477-977ea046f136.jpg',
+  'e69d0890-5c43-412e-b660-201a4d3eb86a.jpg',
+  'e6b81c00-95af-4ec7-a2e8-1df005d31add.jpg',
+  'ec4b814a-e0d1-47e3-9838-6b29485ed5da.jpg',
+].map(filename => ({ filename, url: `/images/gallery/${filename}` }))
+
+type FetchState = 'loading' | 'ready'
+
 export default function GalleryStrip() {
   const [items, setItems] = useState<GalleryItem[]>([])
+  const [state, setState] = useState<FetchState>('loading')
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null)
 
   useEffect(() => {
+    let cancelled = false
     fetch('/admin-api/gallery')
-      .then(r => r.ok ? r.json() : [])
-      .then((data: GalleryItem[]) => setItems(data))
-      .catch(() => {})
+      .then(r => (r.ok ? r.json() : []))
+      .then((data: GalleryItem[]) => {
+        if (cancelled) return
+        setItems(Array.isArray(data) ? data : [])
+        setState('ready')
+      })
+      .catch(() => {
+        if (cancelled) return
+        setState('ready') // fall through to the static fallback
+      })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   useEffect(() => {
     if (!lightbox) return
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null) }
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null)
+    }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [lightbox])
 
-  if (items.length === 0) return null
+  // Always have something to show: live items if present, otherwise the
+  // static fallback. The section is NEVER returned null.
+  const sourceItems = items.length > 0 ? items : FALLBACK_ITEMS
+  const showSkeleton = state === 'loading' && items.length === 0
 
-  const repeated = items.length < 6
-    ? [...items, ...items, ...items, ...items]
-    : [...items, ...items]
+  const repeated =
+    sourceItems.length < 6
+      ? [...sourceItems, ...sourceItems, ...sourceItems, ...sourceItems]
+      : [...sourceItems, ...sourceItems]
 
   return (
     <>
-      <section id="gallery" className="bg-dip-black py-16 md:py-20 overflow-hidden">
+      <section id="gallery" className="bg-dip-black py-16 md:py-20 overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-8 md:px-16 mb-8">
           <p className="label mb-3">Media</p>
           <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">GALLERY</h2>
         </div>
 
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, #080808, transparent)' }} />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to left, #080808, transparent)' }} />
+          <div
+            className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, #080808, transparent)' }}
+          />
+          <div
+            className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, #080808, transparent)' }}
+          />
 
-          <div className="flex gap-3 gallery-scroll" style={{ width: 'max-content' }}>
-            {repeated.map((item, i) => (
-              <div
-                key={`${item.filename}-${i}`}
-                onClick={() => setLightbox(item)}
-                className="flex-shrink-0 w-64 h-44 rounded-xl overflow-hidden bg-dip-card cursor-pointer relative group"
-              >
-                {isVideo(item.filename) ? (
-                  <>
-                    <video
-                      src={item.url}
-                      className="w-full h-full object-cover"
-                      muted
-                      playsInline
-                      preload="metadata"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
-                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span className="text-white text-base ml-1">▶</span>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <img
-                      src={item.url}
-                      alt={`DJ DiP live performance photo`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+          {showSkeleton ? (
+            // Skeleton placeholder while the live feed loads — keeps the section
+            // visibly populated instead of blank.
+            <div className="flex gap-3 px-8 md:px-16" aria-hidden="true">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-shrink-0 w-64 h-44 rounded-xl bg-dip-card animate-pulse"
+                />
+              ))}
+            </div>
+          ) : (
+            <ul className="flex gap-3 gallery-scroll list-none m-0 p-0" style={{ width: 'max-content' }}>
+              {repeated.map((item, i) => (
+                <li key={`${item.filename}-${i}`} className="flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(item)}
+                    aria-label={`Open gallery item ${(i % sourceItems.length) + 1}`}
+                    className="block w-64 h-44 rounded-xl overflow-hidden bg-dip-card cursor-pointer relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
+                  >
+                    {isVideo(item.filename) ? (
+                      <>
+                        <video
+                          src={item.url}
+                          className="w-full h-full object-cover"
+                          width={256}
+                          height={176}
+                          muted
+                          playsInline
+                          preload="metadata"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
+                          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span className="text-white text-base ml-1" aria-hidden="true">▶</span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          src={item.url}
+                          alt="DJ DiP live performance"
+                          width={256}
+                          height={176}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                      </>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
@@ -90,14 +157,19 @@ export default function GalleryStrip() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Gallery image viewer"
             className="fixed inset-0 z-50 bg-black/92 flex items-center justify-center p-4"
             onClick={() => setLightbox(null)}
           >
             <button
-              className="absolute top-5 right-6 text-white/50 hover:text-white text-3xl leading-none transition-colors z-10"
+              type="button"
+              aria-label="Close image viewer"
+              className="absolute top-5 right-6 w-11 h-11 flex items-center justify-center text-white/60 hover:text-white text-3xl leading-none transition-colors z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red rounded-full"
               onClick={() => setLightbox(null)}
             >
-              ✕
+              <span aria-hidden="true">✕</span>
             </button>
 
             <motion.div
@@ -119,7 +191,7 @@ export default function GalleryStrip() {
               ) : (
                 <img
                   src={lightbox.url}
-                  alt="DJ DiP live performance photo"
+                  alt="DJ DiP live performance"
                   className="max-w-full max-h-[88vh] object-contain rounded-2xl"
                 />
               )}

@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
+import Genres from './components/Genres'
+import Mixes from './components/Mixes'
 import Highlights from './components/Highlights'
 import GalleryStrip from './components/GalleryStrip'
 import TechRider from './components/TechRider'
@@ -25,12 +27,16 @@ function Portfolio() {
         }}
       />
       <Nav />
-      <Hero />
-      <About />
-      <GalleryStrip />
-      <Highlights />
-      <TechRider />
-      <Booking />
+      <main>
+        <Hero />
+        <About />
+        <Genres />
+        <Mixes />
+        <GalleryStrip />
+        <Highlights />
+        <TechRider />
+        <Booking />
+      </main>
       <Footer />
     </div>
   )

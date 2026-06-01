@@ -40,7 +40,7 @@ export default function Booking() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.25 }}
-          className="font-script text-3xl md:text-5xl text-dip-rose mt-2 mb-8"
+          className="font-display italic text-3xl md:text-5xl text-dip-rose mt-2 mb-8"
         >
           something unforgettable
         </motion.p>

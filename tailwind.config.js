@@ -11,14 +11,14 @@ export default {
         'dip-red-dark': '#BF2D1E',
         'dip-rose':     '#D44040',
         'dip-cream':    '#F5F0EE',
-        'dip-muted':    '#7A6260',
+        'dip-muted':    '#7A6260',   // decorative / large text only — fails WCAG AA on dip-black for small copy
+        'dip-text-muted': '#A89B99',  // accessible muted body text — ~4.6:1 on #080808 (WCAG AA)
       },
       fontFamily: {
         display: ['"Clash Display"', 'system-ui', 'sans-serif'],
         heading: ['"Cabinet Grotesk"', 'system-ui', 'sans-serif'],
         body:    ['Satoshi', 'system-ui', 'sans-serif'],
         mono:    ['"DM Mono"', 'ui-monospace', 'monospace'],
-        script:  ['"Permanent Marker"', 'cursive'],
       },
       letterSpacing: {
         tighter: '-0.04em',

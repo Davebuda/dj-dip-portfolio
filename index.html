@@ -55,13 +55,21 @@
       rel="stylesheet"
     />
 
-    <!-- DM Mono + Permanent Marker via Google Fonts -->
+    <!-- DM Mono via Google Fonts (Permanent Marker removed — off the type allowlist) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Reveal safety net: if JS is disabled or the IntersectionObserver never fires,
+         force all reveal-wrapped content fully visible so no section can stay blank. -->
+    <noscript>
+      <style>
+        [data-reveal] { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

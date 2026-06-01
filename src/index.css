@@ -184,3 +184,22 @@
 .animate-fade-in {
   animation: fade-in 1s ease-out forwards;
 }
+
+/* ── Reduced-motion: kill infinite/looping CSS animations ──
+   Framer Motion reveals are handled in-component via useReducedMotion();
+   this covers the pure-CSS loops (gallery strip, shimmer, ring spin, marquee). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .gallery-scroll,
+  .shimmer-text,
+  .animate-spin {
+    animation: none !important;
+  }
+}

@@ -82,21 +82,25 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-5"
             >
-              {/* DJ DiP — one colour, KlubN scale */}
+              {/* The page's single, readable <h1>. Accessible name reads
+                  "DJ DiP — Davis"; the em-dash separator prevents the
+                  audited "DJ DiPDAVIS" glyph-soup for SEO / screen readers. */}
               <h1 className="leading-none">
-                <span
-                  className="font-display text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none"
-                  style={{
-                    background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #D44040 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  DJ DiP
-                </span>
-                {/* DAVIS */}
-                <span className="block font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white mt-1">
-                  DAVIS
+                <span className="sr-only">DJ DiP — Davis</span>
+                <span aria-hidden="true">
+                  <span
+                    className="block font-display text-6xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none"
+                    style={{
+                      background: 'linear-gradient(135deg, #E63020 0%, #BF2D1E 55%, #D44040 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}
+                  >
+                    DJ DiP
+                  </span>
+                  <span className="block font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white mt-1">
+                    DAVIS
+                  </span>
                 </span>
               </h1>
               <p className="label mt-4">Resident DJ · KlubN · Oslo, Norway</p>
@@ -109,11 +113,11 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-wrap gap-5 mt-4"
             >
-              <a href={`mailto:${email}`} className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
-                <span className="text-dip-red">✉</span> {email}
+              <a href={`mailto:${email}`} className="flex items-center gap-2 font-body text-sm text-dip-text-muted hover:text-dip-rose transition-colors">
+                <span className="text-dip-red" aria-hidden="true">✉</span> {email}
               </a>
-              <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-2 font-body text-sm text-dip-muted hover:text-dip-rose transition-colors">
-                <span className="text-dip-red">✆</span> {phone}
+              <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-2 font-body text-sm text-dip-text-muted hover:text-dip-rose transition-colors">
+                <span className="text-dip-red" aria-hidden="true">✆</span> {phone}
               </a>
             </motion.div>
 
@@ -175,7 +179,12 @@ export default function Hero() {
                   <span className="font-heading font-bold text-xs tracking-widest uppercase">Oslo</span>
                 </div>
               </div>
-              <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-dip-cream leading-tight">
+              {/* Decorative wordmark inside the press-kit card — NOT a heading.
+                  The page's single <h1> lives in the portrait column. */}
+              <p
+                className="font-display text-5xl md:text-6xl lg:text-7xl text-dip-cream leading-tight"
+                aria-hidden="true"
+              >
                 DAVIS<br />
                 <span
                   style={{
@@ -186,7 +195,7 @@ export default function Hero() {
                 >
                   "DiP"
                 </span>
-              </h2>
+              </p>
             </div>
 
             {/* Stats */}
@@ -263,7 +272,7 @@ export default function Hero() {
                 </a>
               </div>
               <div className="flex items-center justify-between mt-5">
-                <span className="font-script text-3xl text-dip-rose/55">Davis DiP</span>
+                <span className="font-display italic text-3xl text-dip-rose/55">Davis DiP</span>
                 <a href={`https://instagram.com/${instagram}`} target="_blank" rel="noreferrer" className="label hover:text-dip-cream transition-colors">
                   @{instagram}
                 </a>

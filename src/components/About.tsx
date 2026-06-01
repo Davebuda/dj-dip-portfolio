@@ -34,7 +34,7 @@ export default function About() {
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.15 }}
-              className="font-script text-4xl md:text-5xl text-dip-rose leading-tight mb-8"
+              className="font-display italic text-4xl md:text-5xl text-dip-rose leading-tight mb-8"
             >
               "Dance Floor<br />is Too Smooth."
             </motion.blockquote>
@@ -69,8 +69,11 @@ export default function About() {
             transition={{ duration: 0.9, delay: 0.2 }}
           >
             <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none mb-5">
-              DAVIS<br />
-              <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
+              <span className="sr-only">About Davis "DiP"</span>
+              <span aria-hidden="true">
+                DAVIS<br />
+                <span style={{ background: 'linear-gradient(135deg, #E63020, #BF2D1E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DiP</span>
+              </span>
             </h2>
 
             <p className="text-dip-cream/70 font-body font-light leading-relaxed text-base">
