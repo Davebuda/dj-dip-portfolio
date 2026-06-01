@@ -12,6 +12,10 @@ function isVideo(filename: string) {
  * Guarantees the gallery section ALWAYS renders real content even when
  * /admin-api/gallery is empty, down, or unreachable (fixes the blank-gallery
  * + blank-section defect — this section must never return null).
+ *
+ * Exactly the 14 unique images that exist on disk. We never pad by duplicating
+ * a single image to fake a fuller strip — the marquee duplication below is a
+ * seamless-loop technique, not content padding (it is aria-hidden).
  */
 const FALLBACK_ITEMS: GalleryItem[] = [
   '109d4f51-c8d6-4774-9ccb-ee1b4549b46d.jpg',
@@ -29,6 +33,11 @@ const FALLBACK_ITEMS: GalleryItem[] = [
   'e6b81c00-95af-4ec7-a2e8-1df005d31add.jpg',
   'ec4b814a-e0d1-47e3-9838-6b29485ed5da.jpg',
 ].map(filename => ({ filename, url: `/images/gallery/${filename}` }))
+
+// Card intrinsic size — portrait 4:5 so live shots aren't crushed into
+// landscape boxes. width/height attrs prevent layout shift (CLS).
+const CARD_W = 224
+const CARD_H = 280
 
 type FetchState = 'loading' | 'ready'
 
@@ -69,10 +78,61 @@ export default function GalleryStrip() {
   const sourceItems = items.length > 0 ? items : FALLBACK_ITEMS
   const showSkeleton = state === 'loading' && items.length === 0
 
-  const repeated =
-    sourceItems.length < 6
-      ? [...sourceItems, ...sourceItems, ...sourceItems, ...sourceItems]
-      : [...sourceItems, ...sourceItems]
+  // Seamless marquee = the unique set duplicated EXACTLY once (two copies).
+  // translateX(0 -> -50%) then loops with no jump. The second copy is purely
+  // decorative for the loop, so it is hidden from assistive tech.
+  const renderCard = (item: GalleryItem, index: number, decorative: boolean) => (
+    <li
+      key={`${decorative ? 'dup' : 'orig'}-${item.filename}-${index}`}
+      className="flex-shrink-0"
+      aria-hidden={decorative || undefined}
+    >
+      <button
+        type="button"
+        onClick={() => setLightbox(item)}
+        tabIndex={decorative ? -1 : 0}
+        aria-label={decorative ? undefined : `Open gallery item ${index + 1}`}
+        style={{ width: CARD_W }}
+        className="block aspect-[4/5] rounded-xl overflow-hidden bg-dip-card cursor-pointer relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
+      >
+        {isVideo(item.filename) ? (
+          <>
+            <video
+              src={item.url}
+              className="w-full h-full object-cover"
+              width={CARD_W}
+              height={CARD_H}
+              muted
+              playsInline
+              preload="metadata"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="text-white text-base ml-1" aria-hidden="true">▶</span>
+              </div>
+            </div>
+          </>
+        ) : (
+          // <picture> scaffold: AVIF/WebP <source> entries are added here ONLY
+          // when those variants exist on disk. None exist yet, so we ship the
+          // optimized JPG (no fake/404-ing sources). width/height + async
+          // decode + lazy load close the CLS / responsive-image gaps.
+          <picture>
+            <img
+              src={item.url}
+              alt="DJ DiP live performance"
+              width={CARD_W}
+              height={CARD_H}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </picture>
+        )}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors pointer-events-none" />
+      </button>
+    </li>
+  )
 
   return (
     <>
@@ -82,13 +142,15 @@ export default function GalleryStrip() {
           <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">GALLERY</h2>
         </div>
 
-        <div className="relative">
+        {/* w-full + overflow-hidden clamps the marquee track to the viewport so
+            it can never blow out horizontally (the live site hit 2403px). */}
+        <div className="relative w-full overflow-hidden">
           <div
-            className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to right, #080808, transparent)' }}
           />
           <div
-            className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to left, #080808, transparent)' }}
           />
 
@@ -99,53 +161,15 @@ export default function GalleryStrip() {
               {Array.from({ length: 6 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex-shrink-0 w-64 h-44 rounded-xl bg-dip-card animate-pulse"
+                  style={{ width: CARD_W }}
+                  className="flex-shrink-0 aspect-[4/5] rounded-xl bg-dip-card animate-pulse"
                 />
               ))}
             </div>
           ) : (
-            <ul className="flex gap-3 gallery-scroll list-none m-0 p-0" style={{ width: 'max-content' }}>
-              {repeated.map((item, i) => (
-                <li key={`${item.filename}-${i}`} className="flex-shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setLightbox(item)}
-                    aria-label={`Open gallery item ${(i % sourceItems.length) + 1}`}
-                    className="block w-64 h-44 rounded-xl overflow-hidden bg-dip-card cursor-pointer relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
-                  >
-                    {isVideo(item.filename) ? (
-                      <>
-                        <video
-                          src={item.url}
-                          className="w-full h-full object-cover"
-                          width={256}
-                          height={176}
-                          muted
-                          playsInline
-                          preload="metadata"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-colors">
-                          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <span className="text-white text-base ml-1" aria-hidden="true">▶</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <img
-                          src={item.url}
-                          alt="DJ DiP live performance"
-                          width={256}
-                          height={176}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                      </>
-                    )}
-                  </button>
-                </li>
-              ))}
+            <ul className="flex gap-3 gallery-scroll list-none m-0 p-0 w-max">
+              {sourceItems.map((item, i) => renderCard(item, i, false))}
+              {sourceItems.map((item, i) => renderCard(item, i, true))}
             </ul>
           )}
         </div>
