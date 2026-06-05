@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     environment:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-djdip2024}
+      - N8N_SECRET=${N8N_SECRET}
     volumes:
       - portfolio-data:/data
     networks:
