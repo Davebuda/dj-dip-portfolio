@@ -5,6 +5,7 @@ import About from './components/About'
 import Genres from './components/Genres'
 import Mixes from './components/Mixes'
 import Dates from './components/Dates'
+import PastShows from './components/PastShows'
 import Highlights from './components/Highlights'
 import GalleryStrip from './components/GalleryStrip'
 import Reels from './components/Reels'
@@ -16,6 +17,7 @@ import AdminLogin from './admin/AdminLogin'
 import AdminLayout from './admin/AdminLayout'
 import AdminDashboard from './admin/AdminDashboard'
 import AdminGallery from './admin/AdminGallery'
+import AdminArchive from './admin/AdminArchive'
 import AdminContent from './admin/AdminContent'
 
 function Portfolio() {
@@ -36,6 +38,7 @@ function Portfolio() {
         <Genres />
         <Mixes />
         <Dates />
+        <PastShows />
         <Highlights />
         <GalleryStrip />
         <Reels />
@@ -59,6 +62,7 @@ export default function App() {
       <Route path="/builder" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="gallery"   element={<AdminGallery />} />
+        <Route path="archive"   element={<AdminArchive />} />
         <Route path="content"   element={<AdminContent />} />
       </Route>
 

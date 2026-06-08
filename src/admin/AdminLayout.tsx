@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 const nav = [
   { to: '/builder/dashboard', label: 'Dashboard' },
   { to: '/builder/gallery',   label: 'Gallery' },
+  { to: '/builder/archive',   label: 'Archive' },
   { to: '/builder/content',   label: 'Content' },
 ]
 

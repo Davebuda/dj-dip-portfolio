@@ -6,6 +6,7 @@ const links = [
   { label: 'Sound',   href: '#sound' },
   { label: 'Mixes',   href: '#mixes' },
   { label: 'Dates',   href: '#dates' },
+  { label: 'Archive', href: '#archive' },
   { label: 'Reels',   href: '#reels' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Book',    href: '#book' },

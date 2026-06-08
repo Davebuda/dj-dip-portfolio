@@ -73,6 +73,26 @@ export interface Highlight {
   featured: boolean
 }
 
+export interface ArchiveItem {
+  id: string
+  title: string
+  /** ISO date, e.g. '2025-11-22'. Used for date-desc sort. */
+  date: string
+  venue: string
+  city: string
+  /** Optional ticket / event URL. */
+  ticketUrl?: string
+  /** Local re-hosted image path (e.g. '/gallery/<file>'), never a raw IG URL. */
+  imageUrl: string
+  description?: string
+  tags?: string[]
+  /** Gate-② lifecycle: 'suggested' = pending (admin-only), 'published' = public. */
+  reviewStatus: 'suggested' | 'published'
+  sourcePostId: string
+  sourcePlatform: string
+  createdAt: string
+}
+
 export interface Content {
   bio: string
   bio2: string
@@ -92,6 +112,8 @@ export interface Content {
   /** {num,name,desc} cards for the Genres section — new key to avoid clashing with `genres` chips. */
   genreCards?: Genre[]
   highlights?: Highlight[]
+  /** Past Shows / Archive items. Public renders only reviewStatus==='published'. */
+  archive?: ArchiveItem[]
 }
 
 export const DEFAULTS: Content = {
@@ -109,6 +131,7 @@ export const DEFAULTS: Content = {
   proof: [],
   quote: null,
   epkAvailable: false,
+  archive: [],
 
   // Seeded with the CURRENT hardcoded values so the site looks identical
   // until the artist edits them in admin.
@@ -162,6 +185,8 @@ export function useContent(): Content {
           // looks identical until they are edited (never blank).
           genreCards: d.genreCards?.length ? d.genreCards : DEFAULTS.genreCards,
           highlights: d.highlights?.length ? d.highlights : DEFAULTS.highlights,
+          // Stored empty array is a meaningful "no items" state, else default [].
+          archive: Array.isArray(d.archive) ? d.archive : DEFAULTS.archive,
         })
       })
       .catch(() => {})
