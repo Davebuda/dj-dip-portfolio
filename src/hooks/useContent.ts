@@ -145,6 +145,7 @@ export const DEFAULTS: Content = {
       city: 'Oslo',
       ticketUrl: 'https://klubn.no',
       status: 'Early bird out now',
+      imageUrl: '/images/events/dopamine.jpg',
       title: 'Dopamine Series',
       time: '22:00–03:00',
       genre: 'Afrobeats · HipHop · Amapiano',

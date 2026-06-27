@@ -36,14 +36,14 @@ export default function Hero() {
                 fetchPriority="high"
               />
               <span className="tag">Live · KlubN Oslo</span>
-              <div className="ring" aria-hidden="true">
+              <div className="spin-ring" aria-hidden="true">
                 <svg viewBox="0 0 120 120">
                   <defs>
                     <path id="ringpath" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" fill="none" />
                   </defs>
                   <text>
                     <textPath href="#ringpath" startOffset="0">
-                      URBAN · SOUND · FUSION · OSLO · DJ · DiP · URBAN · SOUND · FUSION ·{' '}
+                      URBAN · SOUND · FUSION · OSLO ·{' '}
                     </textPath>
                   </text>
                 </svg>

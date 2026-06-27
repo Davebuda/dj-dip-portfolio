@@ -381,7 +381,7 @@
   border-radius: var(--r-xs);
 }
 
-.ring {
+.spin-ring {
   position: absolute;
   top: 1.4rem;
   right: 1.4rem;
@@ -389,27 +389,27 @@
   height: clamp(96px, 12vw, 128px);
   z-index: 3;
 }
-.ring svg {
+.spin-ring svg {
   width: 100%;
   height: 100%;
   animation: ed-spin 24s linear infinite;
 }
 @keyframes ed-spin { to { transform: rotate(360deg); } }
-.ring text {
+.spin-ring text {
   font-family: 'DM Mono', ui-monospace, monospace;
   font-size: 8.2px;
   letter-spacing: 3.4px;
   fill: var(--cream);
   text-transform: uppercase;
 }
-.ring .hub {
+.spin-ring .hub {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.ring .hub b {
+.spin-ring .hub b {
   width: 34%;
   height: 34%;
   border-radius: 50%;
@@ -911,42 +911,66 @@
 /* ── Dates (editorial bill) ── */
 .date-row {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  align-items: center;
-  padding: clamp(1.2rem, 3vw, 1.8rem) 0;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 3vw, 1.6rem);
+  align-items: start;
+  padding: clamp(1.4rem, 3.5vw, 2.2rem) 0;
   border-bottom: 1px solid var(--line);
 }
 .date-row.first { border-top: 1px solid var(--line); }
-.date-when {
+/* With a poster: image left, text right (holds on mobile too). */
+.date-row.has-poster { grid-template-columns: clamp(110px, 30vw, 196px) 1fr; }
+
+.date-poster {
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--ink-3);
+}
+.date-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.date-body { min-width: 0; }
+.date-kicker {
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.5rem;
+}
+.date-title {
   font-family: 'Clash Display', system-ui, sans-serif;
   font-weight: 600;
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  min-width: 4ch;
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--cream);
 }
-.date-when small {
-  display: block;
-  font-family: 'DM Mono', ui-monospace, monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 400;
-}
-.date-where .venue {
-  font-family: 'Clash Display', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
-  color: var(--cream);
-}
-.date-where .city {
+.date-meta {
   font-family: 'DM Mono', ui-monospace, monospace;
   font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  color: var(--muted);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-top: 0.3rem;
+  color: var(--muted);
+  margin-top: 0.55rem;
+}
+.date-meta .m-genre { display: block; color: var(--rose); margin-top: 0.3rem; }
+.date-desc {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-top: 0.85rem;
+  max-width: 54ch;
+}
+.date-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin-top: 1.1rem;
 }
 .status {
   font-family: 'DM Mono', ui-monospace, monospace;
@@ -963,10 +987,6 @@
 .status.resident { background: var(--red); color: var(--cream); }
 .status.free { border: 1px solid var(--stroke); color: var(--cream); }
 .status.res { border: 1px solid var(--rose); color: var(--rose); }
-@media (max-width: 640px) {
-  .date-row { grid-template-columns: 1fr auto; row-gap: 0.5rem; }
-  .date-when { grid-column: 1 / -1; }
-}
 
 /* ── Stages (flat grid) ── */
 .stages {
@@ -1199,7 +1219,7 @@
   }
   .gallery-scroll,
   .marquee-track,
-  .ring svg,
+  .spin-ring svg,
   .lk-kicker .pulse,
   .animate-spin {
     animation: none !important;

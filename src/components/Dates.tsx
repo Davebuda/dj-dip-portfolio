@@ -50,42 +50,42 @@ function StatusPill({ status }: { status?: string }) {
 function DateRow({ ev, first }: { ev: DjEvent; first: boolean }) {
   const { day, month, year } = formatDate(ev.date)
   const title = titleOf(ev)
-  const meta = [ev.time, ev.genre, ev.price].filter(Boolean).join(' · ')
+  const meta = [ev.venue, ev.city, ev.time].filter(Boolean).join(' · ')
 
   return (
-    <div className={`date-row ${first ? 'first' : ''}`}>
-      <div className="date-when">
-        {day}
-        <small>{month} {year}</small>
+    <article className={`date-row ${ev.imageUrl ? 'has-poster' : ''} ${first ? 'first' : ''}`}>
+      {ev.imageUrl && (
+        <div className="date-poster">
+          <img src={ev.imageUrl} alt={`${title} — event poster`} loading="lazy" decoding="async" />
+        </div>
+      )}
+      <div className="date-body">
+        <div className="date-kicker">{month} {day} · {year}</div>
+        <h3 className="date-title">{title}</h3>
+        <div className="date-meta">
+          {meta}
+          {ev.genre && <span className="m-genre">{ev.genre}</span>}
+        </div>
+        {ev.description && <p className="date-desc">{ev.description}</p>}
+        <div className="date-actions">
+          <StatusPill status={ev.status} />
+          {ev.ticketUrl ? (
+            <a
+              href={ev.ticketUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="font-mono text-xs tracking-wider uppercase text-dip-red hover:text-dip-cream underline underline-offset-4 transition-colors inline-flex items-center min-h-[44px]"
+            >
+              Tickets →
+            </a>
+          ) : (
+            <span className="font-mono text-xs tracking-wider uppercase text-dip-text-muted">
+              DM to attend
+            </span>
+          )}
+        </div>
       </div>
-      <div className="date-where min-w-0">
-        <div className="venue truncate">{title}</div>
-        <div className="city">{ev.venue} · {ev.city}</div>
-        {meta && <div className="city" style={{ color: 'var(--rose)' }}>{meta}</div>}
-        {ev.description && (
-          <p className="font-body font-light text-dip-text-muted text-sm leading-relaxed mt-2 max-w-xl">
-            {ev.description}
-          </p>
-        )}
-      </div>
-      <div className="flex items-center gap-3 shrink-0">
-        <StatusPill status={ev.status} />
-        {ev.ticketUrl ? (
-          <a
-            href={ev.ticketUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="font-mono text-xs tracking-wider uppercase text-dip-red hover:text-dip-cream underline underline-offset-4 transition-colors inline-flex items-center min-h-[44px]"
-          >
-            Tickets →
-          </a>
-        ) : (
-          <span className="font-mono text-xs tracking-wider uppercase text-dip-text-muted">
-            DM to attend
-          </span>
-        )}
-      </div>
-    </div>
+    </article>
   )
 }
 
