@@ -24,7 +24,22 @@ export default function About() {
 
         <div className="about-grid">
           <Reveal className="about-art">
-            <span className="floatmark" aria-hidden="true">DiP</span>
+            <img
+              src="/images/dip-press.png"
+              alt="DJ DiP — Davis, studio portrait"
+              width={1672}
+              height={941}
+            />
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(8,8,8,0.78), transparent 55%)',
+                zIndex: 1,
+                pointerEvents: 'none',
+              }}
+            />
             <span className="about-meta">Oslo · Norway — Event Architect</span>
           </Reveal>
 
