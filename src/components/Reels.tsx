@@ -68,7 +68,7 @@ function ReelCard({ reel }: { reel: Reel }) {
         type="button"
         onClick={toggle}
         aria-label={playing ? `Pause: ${reel.caption}` : `Play: ${reel.caption}`}
-        className="group block w-full aspect-[9/16] rounded-2xl overflow-hidden bg-dip-card relative focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
+        className="tile group block w-full aspect-[9/16] relative focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
       >
         <video
           ref={videoRef}
@@ -102,18 +102,12 @@ export default function Reels() {
   const hasReels = reels.length > 0
 
   return (
-    <section id="reels" className="bg-dip-black py-16 md:py-20 overflow-x-hidden border-t border-dip-rose/10">
-      <div className="max-w-7xl mx-auto px-8 md:px-16 mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3">
-          <div className="flex items-baseline gap-4">
-            <p className="label">Motion</p>
-            <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">
-              REELS
-            </h2>
-          </div>
-          <p className="text-dip-text-muted font-body font-light text-sm max-w-xs sm:text-right leading-relaxed">
-            Floor energy, captured.
-          </p>
+    <section id="reels" className="ed-section overflow-x-hidden" aria-labelledby="reels-t">
+      <div className="ed-wrap mb-[clamp(2.5rem,5vw,4rem)]">
+        <div className="sec-head !mb-0">
+          <span className="sec-num" aria-hidden="true">06</span>
+          <h2 className="sec-title" id="reels-t">In <i>Motion</i></h2>
+          <p className="sec-kicker label">Floor energy, captured.</p>
         </div>
       </div>
 
@@ -128,9 +122,9 @@ export default function Reels() {
         </div>
       ) : (
         // HONEST empty-state — no fabricated reels.
-        <div className="max-w-7xl mx-auto px-8 md:px-16">
+        <div className="ed-wrap">
           <Reveal>
-            <div className="border border-dashed border-dip-rose/20 rounded-2xl p-10 md:p-14 text-center max-w-2xl">
+            <div className="presskit !rounded-[var(--r-lg)] max-w-2xl text-center items-center">
               <p className="font-display text-3xl md:text-4xl text-dip-cream leading-tight mb-4">
                 Clips coming soon.
               </p>

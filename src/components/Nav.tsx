@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react'
 // Only sections that actually render — no dead links. Capped at 6 for 375px.
 // Tech Rider is reachable from the Booking section / footer, not primary nav.
 const links = [
-  { label: 'Sound',   href: '#sound' },
-  { label: 'Mixes',   href: '#mixes' },
-  { label: 'Dates',   href: '#dates' },
-  { label: 'Reels',   href: '#reels' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Book',    href: '#book' },
+  { label: 'Sound',   href: '#sound',   num: '01' },
+  { label: 'Mixes',   href: '#mixes',   num: '02' },
+  { label: 'Dates',   href: '#dates',   num: '03' },
+  { label: 'Reels',   href: '#reels',   num: '04' },
+  { label: 'Gallery', href: '#gallery', num: '05' },
 ]
 
 export default function Nav() {
@@ -16,79 +15,74 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-dip-black/90 backdrop-blur-md border-b border-white/[0.06]' : ''
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="font-display text-3xl tracking-wide text-dip-cream hover:text-dip-rose transition-colors">
-          DJ DiP
+    <header className={`ed-nav ${scrolled ? 'scrolled' : ''}`}>
+      <div className="ed-wrap flex items-center justify-between h-16">
+        {/* Brand */}
+        <a href="#top" className="brand" aria-label="DJ DiP — home">
+          D<i>i</i>P<span className="dot">.</span>
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-[clamp(1rem,2.4vw,2.1rem)]" aria-label="Primary">
           {links.map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="font-heading font-bold text-sm tracking-[0.2em] uppercase text-dip-text-muted hover:text-dip-cream transition-colors"
-            >
+            <a key={link.label} href={link.href} className="nav-link">
               {link.label}
             </a>
           ))}
-        </div>
-
-        {/* Desktop CTA */}
-        <a
-          href="#book"
-          className="hidden md:inline-flex btn-brand text-sm px-6 py-2.5"
-        >
-          Book Now
-        </a>
+          <a href="#book" className="btn-brand !min-h-[44px] px-5 py-2">
+            Book the set
+          </a>
+        </nav>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden flex flex-col items-center justify-center gap-1.5 w-11 h-11"
+          className="md:hidden flex items-center justify-center w-11 h-11 rounded-lg border border-[color:var(--stroke)] text-dip-cream"
           onClick={() => setMenuOpen(v => !v)}
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
-          <span className={`block w-6 h-px bg-dip-cream transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block w-6 h-px bg-dip-cream transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block w-6 h-px bg-dip-cream transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className="relative block w-5">
+            <span className={`block h-0.5 w-5 bg-dip-cream transition-all ${menuOpen ? 'rotate-45 translate-y-[3px]' : '-translate-y-1'}`} />
+            <span className={`block h-0.5 w-5 bg-dip-cream transition-all mt-1 ${menuOpen ? '-rotate-45 -translate-y-[5px]' : ''}`} />
+          </span>
         </button>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-dip-dark/98 backdrop-blur-md border-t border-white/[0.06] px-6 py-8 flex flex-col gap-6">
-          {links.map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-heading font-bold text-base tracking-[0.2em] uppercase text-dip-text-muted hover:text-dip-cream transition-colors flex items-center min-h-[44px]"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#book"
-            onClick={() => setMenuOpen(false)}
-            className="mt-2 btn-brand text-sm text-center"
-          >
-            Book Now
-          </a>
-        </div>
+        <nav
+          id="mobile-menu"
+          className="md:hidden border-t border-[color:var(--line)] bg-[color:var(--ink-2)]"
+          aria-label="Mobile"
+        >
+          <ul className="list-none m-0 p-0">
+            {[...links, { label: 'Book the set', href: '#book', num: '→' }].map(link => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between px-6 py-4 min-h-[44px] font-display text-2xl font-medium text-dip-cream border-t border-[color:var(--line)] first:border-t-0 active:bg-[color:var(--ink-3)]"
+                >
+                  {link.label}
+                  <span className="font-mono text-xs text-dip-text-muted">{link.num}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       )}
-    </nav>
+    </header>
   )
 }

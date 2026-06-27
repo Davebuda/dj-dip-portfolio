@@ -1,28 +1,28 @@
+import { useContent } from '../hooks/useContent'
+
 export default function Footer() {
+  const { contact: { email, phone }, social } = useContent()
+  const telHref = `tel:${phone.replace(/\s/g, '')}`
+
   return (
-    <footer className="bg-dip-black py-8 px-8 md:px-16 border-t border-white/[0.05]">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <span className="font-display text-2xl tracking-wide text-dip-text-muted">DJ DiP</span>
-
-        <p className="font-body text-sm text-dip-text-muted tracking-[0.15em] uppercase text-center">
-          © {new Date().getFullYear()} DJ DiP · Urban Sound Fusion · Oslo, Norway
-        </p>
-
-        <div className="flex gap-6">
-          <a
-            href="https://instagram.com/dj_dip"
-            target="_blank"
-            rel="noreferrer"
-            className="font-heading font-bold text-sm tracking-[0.15em] uppercase text-dip-text-muted hover:text-dip-rose transition-colors inline-flex items-center min-h-[44px]"
-          >
-            Instagram
-          </a>
-          <a
-            href="mailto:2djdip@gmail.com"
-            className="font-heading font-bold text-sm tracking-[0.15em] uppercase text-dip-text-muted hover:text-dip-rose transition-colors inline-flex items-center min-h-[44px]"
-          >
-            Email
-          </a>
+    <footer className="relative z-[2] border-t border-[color:var(--line)] pt-[clamp(3rem,6vw,5rem)] pb-10 mt-[clamp(2rem,5vw,4rem)]">
+      <div className="ed-wrap">
+        <div className="foot-grid">
+          <div>
+            <div className="foot-mark">DAVIS <i>DiP</i></div>
+            <p className="foot-tag">DJ DiP — Davis · Resident DJ, KlubN Oslo. Urban Sound Fusion.</p>
+          </div>
+          <nav className="foot-social" aria-label="Social and contact">
+            <a href={`https://instagram.com/${social.instagram}`} target="_blank" rel="noopener noreferrer">Instagram · @{social.instagram}</a>
+            <a href={`https://soundcloud.com/${social.soundcloud}`} target="_blank" rel="noopener noreferrer">SoundCloud · {social.soundcloud}</a>
+            <a href={`https://tiktok.com/@${social.tiktok}`} target="_blank" rel="noopener noreferrer">TikTok · @{social.tiktok}</a>
+            <a href={`mailto:${email}`}>{email}</a>
+            <a href={telHref}>{phone}</a>
+          </nav>
+        </div>
+        <div className="foot-bottom">
+          <span>© {new Date().getFullYear()} DJ DiP — Davis. All rights reserved.</span>
+          <span className="built"><span className="dot" aria-hidden="true" />Built in Oslo ✶</span>
         </div>
       </div>
     </footer>

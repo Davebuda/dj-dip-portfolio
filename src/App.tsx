@@ -21,14 +21,9 @@ import AdminContent from './admin/AdminContent'
 function Portfolio() {
   return (
     <div className="overflow-x-hidden">
-      <div
-        className="fixed inset-0 -z-10"
-        style={{
-          backgroundImage: 'url(/images/bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-        }}
-      />
+      {/* AE4 ambient near-black field + ~5% grain (replaces the bg.jpg backdrop) */}
+      <div className="field" aria-hidden="true" />
+      <div className="grain" aria-hidden="true" />
       <Nav />
       <main>
         <Hero />

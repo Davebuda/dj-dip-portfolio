@@ -3,94 +3,77 @@ import BookingForm from './BookingForm'
 import { useContent } from '../hooks/useContent'
 
 /**
- * EPK download state.
- * The `epkAvailable` flag is editable in admin. Toggle it on (and drop the PDF
- * at public/epk/dj-dip-epk.pdf, or upload it via the admin gallery) once the
- * press kit exists. Until then we render an honest "coming soon" disabled
- * state — never a link to a 404.
+ * Booking band — "Bring the fusion to your night."
+ *
+ * EPK download state: the `epkAvailable` flag is editable in admin. Toggle it on
+ * (and drop the PDF at public/epk/dj-dip-epk.pdf) once the press kit exists.
+ * Until then we render an honest disabled state — never a link to a 404.
  */
 const EPK_HREF = '/epk/dj-dip-epk.pdf'
 
 export default function Booking() {
   const { contact: { email, phone }, epkAvailable = false } = useContent()
+  const telHref = `tel:${phone.replace(/\s/g, '')}`
 
   return (
-    <section id="book" className="relative py-20 px-8 md:px-16 overflow-hidden">
-      <div className="absolute inset-0 bg-dip-dark" />
-      <div className="absolute inset-0 bg-gradient-to-br from-dip-red/10 via-transparent to-dip-rose/5" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-dip-red/8 blur-[140px] rounded-full pointer-events-none" />
+    <section id="book" className="ed-section" aria-labelledby="book-t">
+      <div className="ed-wrap">
+        <Reveal className="booking">
+          <span className="ghost-b" aria-hidden="true">DiP</span>
 
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none" aria-hidden="true">
-        <span className="font-display text-[14rem] md:text-[20rem] text-white/[0.02] leading-none">DiP</span>
-      </div>
-
-      <div className="relative max-w-2xl mx-auto text-center">
-
-        <Reveal>
-          <p className="label mb-6">Get In Touch</p>
-          <h2 className="font-display text-5xl md:text-7xl text-dip-cream leading-none">
-            LET'S CREATE
-          </h2>
-          <p className="font-display italic text-3xl md:text-5xl text-dip-rose mt-2">
-            something unforgettable
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.1} className="mt-10 glass-card rounded-2xl p-6 md:p-8">
-          <BookingForm />
-        </Reveal>
-
-        {/* EPK download — real link when the PDF exists, honest disabled state otherwise. */}
-        <Reveal delay={0.15} className="mt-6">
-          {epkAvailable ? (
-            <a
-              href={EPK_HREF}
-              download
-              className="btn-outline w-full sm:w-auto text-sm px-8 min-h-[44px] gap-2"
-            >
-              Download Press Kit (EPK)
-              <span aria-hidden="true">↓</span>
-            </a>
-          ) : (
-            <div className="inline-flex flex-col items-center gap-1">
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                className="btn-outline w-full sm:w-auto text-sm px-8 min-h-[44px] opacity-50 cursor-not-allowed"
-              >
-                Press Kit (EPK) — Coming Soon
-              </button>
-              <span className="font-mono text-xs text-dip-text-muted">Full EPK PDF in preparation.</span>
+          <div className="booking-in">
+            <div>
+              <span className="label label-red">Booking</span>
+              <h2 id="book-t" className="booking-title mt-4">Bring the <i>fusion</i> to your night.</h2>
+              <p className="mt-5 text-[color:var(--muted)] text-[1.04rem] leading-relaxed max-w-[44ch]">
+                Clubs, concepts, brand events across Oslo and beyond — DiP builds the set around
+                your room, your crowd, and your peak hour. Tell me the date.
+              </p>
             </div>
-          )}
-        </Reveal>
 
-        {/* Direct-contact fallback to the form's mailto compose. */}
-        <Reveal delay={0.2} className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 mb-8">
-          <a
-            href={`mailto:${email}`}
-            className="btn-brand w-full sm:w-auto text-sm px-8 min-h-[44px] group"
-          >
-            Email Directly
-            <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300 inline-block" aria-hidden="true">→</span>
-          </a>
-          <a
-            href={`tel:${phone.replace(/\s/g, '')}`}
-            className="btn-outline w-full sm:w-auto text-sm px-8 min-h-[44px]"
-          >
-            {phone}
-          </a>
-        </Reveal>
+            <div className="flex flex-col gap-3">
+              <a className="book-line" href={`mailto:${email}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+                <div className="min-w-0">
+                  <div className="k">Email</div>
+                  <div className="v">{email}</div>
+                </div>
+              </a>
+              <a className="book-line" href={telHref}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+                </svg>
+                <div className="min-w-0">
+                  <div className="k">Phone</div>
+                  <div className="v">{phone}</div>
+                </div>
+              </a>
 
-        <Reveal delay={0.3} className="flex items-center justify-center gap-6">
-          <a href="https://instagram.com/dj_dip" target="_blank" rel="noreferrer" className="label inline-flex items-center min-h-[44px] hover:text-dip-cream transition-colors">
-            @dj_dip
-          </a>
-          <span className="w-px h-4 bg-dip-rose/20" aria-hidden="true" />
-          <a href="https://instagram.com/klub_n_oslo" target="_blank" rel="noreferrer" className="label inline-flex items-center min-h-[44px] hover:text-dip-cream transition-colors">
-            @klub_n_oslo
-          </a>
+              {/* EPK — real link when the PDF exists, honest disabled state otherwise. */}
+              {epkAvailable ? (
+                <a href={EPK_HREF} download className="btn-outline w-full">
+                  Download Press Kit (EPK)
+                  <span aria-hidden="true">↓</span>
+                </a>
+              ) : (
+                <div className="flex flex-col gap-1">
+                  <button type="button" disabled aria-disabled="true" className="btn-outline w-full opacity-50 cursor-not-allowed">
+                    Press Kit (EPK) — Coming Soon
+                  </button>
+                  <span className="font-mono text-xs text-dip-text-muted">Full EPK PDF in preparation.</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Booking enquiry form — real validation + mailto delivery. */}
+          <div className="relative z-[2] mt-10 pt-8 border-t border-[color:var(--line)]">
+            <p className="label mb-5">Or send the brief</p>
+            <BookingForm />
+          </div>
         </Reveal>
       </div>
     </section>

@@ -2,77 +2,39 @@ import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
 import { useContent } from '../hooks/useContent'
 
 /**
- * Residencies / Stages.
- * Rows come from the content store (`highlights`, editable in admin). Seeded
- * with the original hardcoded venues so the section looks identical until
- * edited; falls back to [] only if a stored value is explicitly empty.
+ * 04 — Stages & residencies. Editorial flat-grid roster (from `highlights`,
+ * editable in admin). Seeded with the original venues so the section looks
+ * identical until edited; falls back to [] only if a stored value is empty.
  */
 export default function Highlights() {
   const { highlights: events = [] } = useContent()
 
   return (
-    <section id="stages" className="bg-dip-card py-16 md:py-20 px-8 md:px-16 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto">
-
-        <Reveal className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-8">
-          <div className="flex items-baseline gap-4">
-            <p className="label">Residencies</p>
-            <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">
-              STAGES
-            </h2>
-          </div>
-          <p className="text-dip-text-muted font-body font-light text-sm max-w-xs sm:text-right leading-relaxed">
-            Resident sets · club nights · private events.
-          </p>
+    <section id="stages" className="ed-section" aria-labelledby="stages-t">
+      <div className="ed-wrap">
+        <Reveal className="sec-head">
+          <span className="sec-num" aria-hidden="true">04</span>
+          <h2 className="sec-title" id="stages-t">Stages &amp; <i>residencies</i></h2>
+          <p className="sec-kicker label">A roster built across Oslo's club floors.</p>
         </Reveal>
 
-        <RevealGroup stagger={0.06}>
+        <RevealGroup stagger={0.05} className="stages">
           {events.map((ev, i) => (
             <RevealItem
               key={`${ev.venue}-${i}`}
-              className={`group flex flex-col md:flex-row md:items-center justify-between py-5 border-b transition-all duration-300 ${
-                ev.featured
-                  ? 'border-dip-red/40 hover:border-dip-red'
-                  : 'border-dip-rose/10 hover:border-dip-rose/30'
-              }`}
+              className={`stage ${ev.featured ? 'primary' : ''}`}
             >
-              <div className="flex items-center gap-5">
-                <span
-                  className={`font-mono text-base leading-none w-8 transition-colors duration-300 ${
-                    ev.featured ? 'text-dip-red' : 'text-dip-red/25 group-hover:text-dip-red/60'
-                  }`}
-                  aria-hidden="true"
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <p
-                    className={`font-heading font-bold text-base md:text-lg transition-colors duration-300 ${
-                      ev.featured ? 'text-white' : 'text-dip-cream group-hover:text-white'
-                    }`}
-                  >
-                    {ev.venue}
-                    {ev.featured && (
-                      <span className="ml-3 inline-block text-[11px] font-heading font-bold tracking-[0.16em] uppercase text-dip-red border border-dip-red/50 px-2 py-0.5 align-middle">
-                        Resident
-                      </span>
-                    )}
-                  </p>
-                  <p className="text-dip-text-muted font-body font-light text-sm mt-0.5">
-                    {ev.event}
-                  </p>
+              <span className="idx" aria-hidden="true">
+                {ev.featured ? '★ Resident' : String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <div className="vn">{ev.venue}</div>
+                <div className="role">
+                  {ev.event}
+                  {ev.tags.length > 0 && (
+                    <span className="chips">{ev.tags.join(' · ')}</span>
+                  )}
                 </div>
-              </div>
-
-              <div className="flex flex-wrap gap-1.5 mt-3 md:mt-0 ml-[52px] md:ml-0">
-                {ev.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="text-[11px] font-heading font-bold tracking-wide text-dip-rose/75 bg-dip-rose/[0.07] border border-dip-rose/20 rounded-full px-3 py-1"
-                  >
-                    {tag}
-                  </span>
-                ))}
               </div>
             </RevealItem>
           ))}

@@ -2,86 +2,68 @@ import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
 import { useContent } from '../hooks/useContent'
 
 /**
- * Social Proof (#trusted) — deliberately SMALL.
- *
- * A quiet credibility strip: venue / promoter names (or logos when supplied) +
- * at most ONE short pull-quote. Not a hero section, no carousel, no star ratings.
+ * 07 — On Record. A quiet editorial credibility band: venue / promoter
+ * wordmarks (or logos when supplied) + at most ONE pull-quote.
  *
  * Honest by default: ships with NO fabricated testimonials. `proof`/`quote`
- * come from the content store (src/hooks/useContent.ts) and default to
- * empty/null — the honest empty-state renders until the artist adds real ones.
- * If only names exist (no logo files yet), they render as text wordmarks.
- * Logos are uploaded via the admin gallery flow.
+ * come from the content store and default to empty/null — the honest
+ * empty-state renders until real ones are added. If only names exist, they
+ * render as text wordmarks.
  */
-
 export default function SocialProof() {
   const { proof = [], quote = null } = useContent()
   const hasProof = proof.length > 0
 
-  if (!hasProof) {
-    // HONEST empty-state — small and quiet, no fabricated credibility.
-    return (
-      <section
-        id="trusted"
-        className="bg-dip-card py-12 md:py-14 px-8 md:px-16 overflow-x-hidden border-t border-dip-rose/10"
-      >
-        <div className="max-w-7xl mx-auto">
-          <Reveal className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
-            <p className="label">Trusted by</p>
-            <p className="font-body font-light text-sm text-dip-text-muted leading-relaxed">
-              Venue and promoter credits will appear here.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-    )
-  }
-
   return (
-    <section
-      id="trusted"
-      className="bg-dip-card py-12 md:py-14 px-8 md:px-16 overflow-x-hidden border-t border-dip-rose/10"
-    >
-      <div className="max-w-7xl mx-auto">
-        <Reveal className="mb-6">
-          <p className="label">Trusted by</p>
+    <section id="trusted" className="ed-section" aria-labelledby="trusted-t">
+      <div className="ed-wrap">
+        <Reveal className="sec-head">
+          <span className="sec-num" aria-hidden="true">07</span>
+          <h2 className="sec-title" id="trusted-t">On <i>Record</i></h2>
+          <p className="sec-kicker label">Venues and promoters across the circuit.</p>
         </Reveal>
 
-        <RevealGroup
-          stagger={0.05}
-          className="flex flex-wrap items-center gap-x-8 gap-y-4 md:gap-x-12"
-        >
-          {proof.map(item => (
-            <RevealItem key={item.name} className="flex items-center">
-              {item.logo ? (
-                <img
-                  src={item.logo}
-                  alt={item.name}
-                  width={120}
-                  height={40}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-8 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
-                />
-              ) : (
-                <span className="font-heading font-bold text-base tracking-wide text-dip-text-muted hover:text-dip-cream transition-colors">
-                  {item.name}
-                </span>
-              )}
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        {hasProof ? (
+          <>
+            <RevealGroup stagger={0.05} className="flex flex-wrap items-center gap-x-10 gap-y-5 md:gap-x-14">
+              {proof.map(item => (
+                <RevealItem key={item.name} className="flex items-center">
+                  {item.logo ? (
+                    <img
+                      src={item.logo}
+                      alt={item.name}
+                      width={120}
+                      height={40}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-8 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                    />
+                  ) : (
+                    <span className="font-display text-2xl md:text-3xl text-dip-text-muted hover:text-dip-cream transition-colors tracking-tight">
+                      {item.name}
+                    </span>
+                  )}
+                </RevealItem>
+              ))}
+            </RevealGroup>
 
-        {quote && quote.text && (
-          <Reveal delay={0.1} className="mt-8 max-w-2xl">
-            <blockquote className="border-l-2 border-dip-red/50 pl-5">
-              <p className="font-body text-lg text-dip-cream/90 leading-relaxed italic">
-                “{quote.text}”
-              </p>
-              <footer className="mt-2 font-mono text-xs text-dip-text-muted not-italic">
-                — {quote.attribution}
-              </footer>
-            </blockquote>
+            {quote && quote.text && (
+              <Reveal delay={0.1} className="mt-12 max-w-3xl">
+                <blockquote className="border-l border-dip-red/60 pl-6">
+                  <p className="font-display italic text-2xl md:text-3xl text-dip-cream leading-snug">
+                    “{quote.text}”
+                  </p>
+                  <footer className="mt-3 label not-italic">— {quote.attribution}</footer>
+                </blockquote>
+              </Reveal>
+            )}
+          </>
+        ) : (
+          // HONEST empty-state — small and quiet, no fabricated credibility.
+          <Reveal>
+            <p className="font-body font-light text-base text-dip-text-muted leading-relaxed max-w-xl">
+              Venue and promoter credits will appear here.
+            </p>
           </Reveal>
         )}
       </div>

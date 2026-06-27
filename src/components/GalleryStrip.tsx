@@ -93,7 +93,7 @@ export default function GalleryStrip() {
         tabIndex={decorative ? -1 : 0}
         aria-label={decorative ? undefined : `Open gallery item ${index + 1}`}
         style={{ width: CARD_W }}
-        className="block aspect-[4/5] rounded-xl overflow-hidden bg-dip-card cursor-pointer relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
+        className="tile block aspect-[4/5] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red"
       >
         {isVideo(item.filename) ? (
           <>
@@ -136,10 +136,13 @@ export default function GalleryStrip() {
 
   return (
     <>
-      <section id="gallery" className="bg-dip-black py-16 md:py-20 overflow-x-hidden">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 mb-8">
-          <p className="label mb-3">Media</p>
-          <h2 className="font-display text-5xl md:text-6xl text-dip-cream leading-none">GALLERY</h2>
+      <section id="gallery" className="ed-section overflow-x-hidden" aria-labelledby="gallery-t">
+        <div className="ed-wrap mb-[clamp(2.5rem,5vw,4rem)]">
+          <div className="sec-head !mb-0">
+            <span className="sec-num" aria-hidden="true">05</span>
+            <h2 className="sec-title" id="gallery-t">From the <i>floor</i></h2>
+            <p className="sec-kicker label">Selected frames — booth, crowd, peak hour.</p>
+          </div>
         </div>
 
         {/* w-full + overflow-hidden clamps the marquee track to the viewport so

@@ -21,9 +21,12 @@ export interface Mix {
   title: string
   venue: string
   genreTags: string[]
-  duration: string
-  bpm: string
-  soundcloudUrl: string
+  /** Optional — only shown when supplied (no fabricated specs). */
+  duration?: string
+  bpm?: string
+  /** A set has EITHER a SoundCloud URL or a YouTube URL (YouTube takes priority). */
+  soundcloudUrl?: string
+  youtubeUrl?: string
   tracklist: TracklistEntry[]
 }
 
@@ -36,6 +39,23 @@ export interface DjEvent {
   ticketUrl?: string
   /** Optional status label, e.g. 'Free entry' / 'Sold out'. */
   status?: string
+  /* --- Optional rich display fields (also ingested via /admin-api/ingest/events) --- */
+  /** Event/night name, shown as the row title. Falls back to `venue`. */
+  title?: string
+  /** Door/set time, e.g. '22:00–03:00'. */
+  time?: string
+  /** Genre line, e.g. 'Afrobeats · HipHop · Amapiano'. */
+  genre?: string
+  /** Price / entry note. */
+  price?: string
+  /** Short description line. */
+  description?: string
+  /** Poster image URL. */
+  imageUrl?: string
+  /** Street address. */
+  address?: string
+  /** Country. */
+  country?: string
 }
 
 export interface Reel {
@@ -97,16 +117,50 @@ export interface Content {
 export const DEFAULTS: Content = {
   bio: 'With over eight years behind the decks and a deep understanding of club dynamics, DJ DiP delivers prime-time, high-energy sets rooted in Hip-Hop/R&B, Afrobeat, Dancehall, and Amapiano — shaped into a seamless Urban Sound Fusion through intentional genre bridges, mature BPM control, and production-led transitions.',
   bio2: 'Peak-hour specialist. Event Architect. Concept Builder. Resident DJ at KlubN Oslo.',
-  stages: ['KlubN — Resident', 'Gamba Beat Bar', "Kiki's House", 'Faksen Bar', 'Old School Vibe', 'Oslo Street Foods - Dopamine'],
-  genres: ['HipHop & RnB', 'Afrobeats', 'Shatta', 'Amapiano', 'Dancehall'],
+  // Real venue roster (verified from Instagram @_dj_dip, Jun 2026).
+  stages: ['KlubN — Resident', 'Amaru Oslo', 'Gamla Beat Bar', 'Dattera til Hagen', 'Brød & Sirkus', 'Kulturhuset i Oslo'],
+  genres: ['HipHop & RnB', 'Afrobeats', 'Amapiano', 'Shatta', 'Dancehall', 'Afro-House', 'Gqom', '2000s Throwback'],
   contact: { email: '2djdip@gmail.com', phone: '+47 967 36 112' },
-  social: { instagram: 'dj_dip', soundcloud: 'bukenya-davis', tiktok: 'dj_dip' },
+  // IG handle is "_dj_dip" (leading underscore) — the bare "dj_dip" link 404s.
+  social: { instagram: '_dj_dip', soundcloud: 'bukenya-davis', tiktok: '_dj_dip' },
 
-  // Honest-by-default: empty arrays render the truthful empty-states.
-  mixes: [],
-  events: [],
+  // Mixes: only the verified YouTube set (DJ DiP's klubn.no profile / KlubN
+  // channel). One real recording — nothing more promised, nothing fabricated.
+  mixes: [
+    {
+      id: 'oldschool-2000s-throwback',
+      title: '2000s All-Hits Throwback — HipHop & RnB',
+      venue: 'Old School Vibe · Brød & Sirkus',
+      genreTags: ['HipHop & RnB', '2000s', 'Dancehall'],
+      youtubeUrl: 'https://www.youtube.com/watch?v=yijEi-zr6Ws',
+      tracklist: [],
+    },
+  ],
+  // Events: only UPCOMING dates ship live (Social Sync ingest/events rule;
+  // Dates.tsx auto-hides past). Seeded with the verified next public night.
+  events: [
+    {
+      date: '2026-07-18',
+      venue: 'Amaru Oslo',
+      city: 'Oslo',
+      ticketUrl: 'https://klubn.no',
+      status: 'Early bird out now',
+      title: 'Dopamine Series',
+      time: '22:00–03:00',
+      genre: 'Afrobeats · HipHop · Amapiano',
+      description: "Oslo's biggest summer night — a curated DJ lineup with a surprise international headliner. Youngs Nede · ID 20.",
+    },
+  ],
   reels: [],
-  proof: [],
+  // Real venue credits (verified from IG) — text wordmarks, no fabricated logos.
+  proof: [
+    { name: 'KlubN' },
+    { name: 'Amaru Oslo' },
+    { name: 'Dattera til Hagen' },
+    { name: 'Brød & Sirkus' },
+    { name: 'Kulturhuset i Oslo' },
+    { name: 'Gamla Beat Bar' },
+  ],
   quote: null,
   epkAvailable: false,
 
@@ -115,16 +169,21 @@ export const DEFAULTS: Content = {
   genreCards: [
     { num: '01', name: 'HipHop & RnB', desc: 'Urban pulse — the foundation of every set.' },
     { num: '02', name: 'Afrobeats', desc: 'Rhythms that move continents.' },
-    { num: '03', name: 'Shatta', desc: 'High-energy Caribbean dancehall.' },
-    { num: '04', name: 'Amapiano', desc: 'Log drums, late-night soul.' },
+    { num: '03', name: 'Amapiano', desc: 'Log drums, late-night soul.' },
+    { num: '04', name: 'Shatta', desc: 'High-energy Caribbean heat.' },
+    { num: '05', name: 'Dancehall', desc: 'Heavy riddims, peak-hour bounce.' },
+    { num: '06', name: 'Afro-House', desc: 'Deep, hypnotic, four-to-the-floor.' },
+    { num: '07', name: 'Gqom', desc: 'Raw South-African low-end.' },
+    { num: '08', name: '2000s Throwback', desc: 'Nostalgic singalong classics.' },
   ],
+  // Residency / stages roster — venues verified from Instagram @_dj_dip (Jun 2026).
   highlights: [
     { venue: 'KlubN', event: 'Resident DJ · Event Architect · Concept Builder', tags: ['Urban Sound Fusion', 'Oslo'], featured: true },
-    { venue: 'Gamba Beat Bar', event: 'Content Party', tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'], featured: false },
-    { venue: "Kiki's House", event: 'Club Night', tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'], featured: false },
-    { venue: 'Old School Vibe', event: 'Throwback Night', tags: ['HipHop & RnB', 'Dancehall', 'Afrobeats'], featured: false },
-    { venue: 'Faksen Bar', event: 'Amapiano Scene', tags: ['Amapiano', 'Afro-House', 'Gqom'], featured: false },
-    { venue: 'Faksen Bar', event: 'Content Party', tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'], featured: false },
+    { venue: 'Amaru Oslo', event: 'Dopamine Series · Content Party', tags: ['Afrobeats', 'HipHop & RnB', 'Amapiano'], featured: false },
+    { venue: 'Gamla Beat Bar', event: 'Backyard Sessions', tags: ['HipHop & RnB', 'Shatta', 'Afrobeats'], featured: false },
+    { venue: 'Dattera til Hagen', event: '17. Mai Feiring', tags: ['HipHop & RnB', 'Afrobeats', 'Dancehall'], featured: false },
+    { venue: 'Brød & Sirkus', event: 'Old School Vibe — Throwback Set', tags: ['HipHop & RnB', '2000s', 'Dancehall'], featured: false },
+    { venue: 'Kulturhuset i Oslo', event: 'Musikkens Dag', tags: ['HipHop & RnB', 'Afrobeats', 'Singalong'], featured: false },
   ],
 }
 

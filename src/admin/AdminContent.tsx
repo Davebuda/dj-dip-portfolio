@@ -313,10 +313,11 @@ export default function AdminContent() {
               <TextInput label="Title" value={mix.title} onChange={v => { setMixes(m => patch(m, i, { title: v })); dirty() }} />
               <TextInput label="Venue" value={mix.venue} onChange={v => { setMixes(m => patch(m, i, { venue: v })); dirty() }} />
               <div className="grid grid-cols-2 gap-3">
-                <TextInput label="BPM" value={mix.bpm} onChange={v => { setMixes(m => patch(m, i, { bpm: v })); dirty() }} />
-                <TextInput label="Duration" value={mix.duration} placeholder="e.g. 62:14" onChange={v => { setMixes(m => patch(m, i, { duration: v })); dirty() }} />
+                <TextInput label="BPM" value={mix.bpm ?? ''} onChange={v => { setMixes(m => patch(m, i, { bpm: v })); dirty() }} />
+                <TextInput label="Duration" value={mix.duration ?? ''} placeholder="e.g. 62:14" onChange={v => { setMixes(m => patch(m, i, { duration: v })); dirty() }} />
               </div>
-              <TextInput label="SoundCloud URL" value={mix.soundcloudUrl} onChange={v => { setMixes(m => patch(m, i, { soundcloudUrl: v })); dirty() }} />
+              <TextInput label="YouTube URL" value={mix.youtubeUrl ?? ''} placeholder="https://youtu.be/…" onChange={v => { setMixes(m => patch(m, i, { youtubeUrl: v })); dirty() }} />
+              <TextInput label="SoundCloud URL" value={mix.soundcloudUrl ?? ''} onChange={v => { setMixes(m => patch(m, i, { soundcloudUrl: v })); dirty() }} />
               <div>
                 <label className="label mb-1.5 block">Genre tags (one per line)</label>
                 <textarea value={mix.genreTags.join('\n')} rows={3} className={INPUT_AREA}

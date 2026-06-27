@@ -1,54 +1,56 @@
-import Reveal, { RevealGroup, RevealItem } from './ui/Reveal'
+import Reveal from './ui/Reveal'
 import { useContent } from '../hooks/useContent'
 
 /**
- * The Sound — deliberately COMPACT. A tight "sound palette" band, not a hero
- * section. (Was an oversized 4-big-card block with a 10rem heading; reduced per
- * direction — genres read as a quick list, the way djkiki folds them inline.)
- *
- * Genre cards come from the content store (`genreCards`, editable in admin).
- * Seeded with the original hardcoded values so the section looks identical
- * until edited; falls back to [] only if a stored value is explicitly empty.
+ * 01 — The Sound. Editorial flat-grid of genre cells (from `genreCards`,
+ * editable in admin) led in by a hover-pausing genre marquee built from the
+ * `genres` chip list. Seeded with the original values so it looks identical
+ * until edited; falls back to [] only when a stored value is explicitly empty.
  */
 export default function Genres() {
-  const { genreCards = [] } = useContent()
+  const { genreCards = [], genres = [] } = useContent()
+
+  // Marquee items: genre names + the fusion line, duplicated once for a
+  // seamless loop. Decorative — aria-hidden.
+  const marquee = [...genres, 'Urban Sound Fusion']
 
   return (
-    <section
-      id="sound"
-      className="bg-dip-black py-16 md:py-20 px-8 md:px-16 overflow-x-hidden border-t border-dip-rose/10"
-    >
-      <div className="max-w-7xl mx-auto">
-        <Reveal className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-10">
-          <div className="flex items-baseline gap-4">
-            <p className="label">The Sound</p>
-            <h2 className="font-display text-3xl md:text-4xl text-dip-cream leading-none">
-              GENRES
-            </h2>
-          </div>
-          <p className="text-dip-text-muted font-body font-light text-sm max-w-xs sm:text-right leading-relaxed">
-            Four genres fused into one Urban Club Sound.
-          </p>
+    <section id="sound" className="ed-section" aria-labelledby="sound-t">
+      {/* Genre marquee (full-bleed band) */}
+      <div className="marquee mb-[clamp(2.5rem,5vw,4rem)]" aria-hidden="true">
+        <div className="marquee-track">
+          {[0, 1].map(copy =>
+            marquee.map((g, i) => (
+              <span key={`${copy}-${g}-${i}`} className={i % 2 === 1 ? 'out' : undefined}>
+                {g}
+              </span>
+            )),
+          )}
+        </div>
+      </div>
+
+      <div className="ed-wrap">
+        <Reveal className="sec-head">
+          <span className="sec-num" aria-hidden="true">01</span>
+          <h2 className="sec-title" id="sound-t">The <i>Sound</i></h2>
+          <p className="sec-kicker label">Genres fused into one seamless thread — bridged by intent, not accident.</p>
         </Reveal>
 
-        <RevealGroup className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
-          {genreCards.map(g => (
-            <RevealItem
-              key={g.name}
-              className="flex flex-col gap-1.5 border-t border-dip-rose/15 pt-4"
-            >
-              <span className="font-mono text-xs text-dip-red/60" aria-hidden="true">
-                {g.num}
-              </span>
-              <h3 className="font-heading font-bold text-lg md:text-xl text-dip-cream leading-tight">
-                {g.name}
-              </h3>
-              <p className="text-dip-text-muted font-body font-light text-sm leading-snug">
-                {g.desc}
-              </p>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        <Reveal className="genres">
+          {genreCards.map((g, i) => {
+            const wide = genreCards.length % 2 === 1 && i === genreCards.length - 1
+            return (
+              <article key={g.name} className={`genre ${wide ? 'wide' : ''}`}>
+                <span className="gbar" aria-hidden="true" />
+                <span className="gnum">{g.num}</span>
+                <div>
+                  <h3>{g.name}</h3>
+                  <p>{g.desc}</p>
+                </div>
+              </article>
+            )
+          })}
+        </Reveal>
       </div>
     </section>
   )

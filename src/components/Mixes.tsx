@@ -1,21 +1,87 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { FaSoundcloud } from 'react-icons/fa6'
+import { FaYoutube } from 'react-icons/fa6'
 import Reveal from './ui/Reveal'
 import { useContent, type Mix } from '../hooks/useContent'
 
 /**
- * Mixes / Music — the #1 content gap for a working DJ.
+ * 02 — Recorded sets.
  *
- * Honest by default: ships with NO fabricated sets. Until the artist adds
- * real SoundCloud URLs + tracklists (via the content store / admin), this
- * renders a truthful empty-state, never fake mixes.
+ * Honest by default: ships with NO fabricated sets and promises nothing more
+ * than what actually exists. Currently that is ONE verified recording — DJ DiP's
+ * YouTube set (from his klubn.no profile / the KlubN channel) — rendered as a
+ * single featured player. No "more coming" copy, no fake mixes.
  *
- * When mixes exist: a custom-chromed set list (left) drives a bespoke player
- * panel (right) backed by the SoundCloud HTML5 Widget API for real play/pause,
- * with a stylized red waveform (decoration synced to play state, NOT true FFT)
- * and an expandable tracklist.
+ * A set carries EITHER a `youtubeUrl` (a real video embed) or a `soundcloudUrl`
+ * (the SoundCloud HTML5 Widget API for real play/pause + waveform). With one
+ * mix the set list is omitted; with several, an editorial set list drives the
+ * player.
  */
+
+/* ── YouTube ─────────────────────────────────────────────────────────── */
+
+function youTubeId(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/)
+  return m ? m[1] : null
+}
+
+function YouTubeMix({ mix }: { mix: Mix }) {
+  const id = mix.youtubeUrl ? youTubeId(mix.youtubeUrl) : null
+
+  return (
+    <div className="presskit !rounded-[var(--r-lg)] gap-6">
+      <div className="pk-head">
+        <div>
+          <h3 className="mix-title">{mix.title}</h3>
+          <p className="font-mono text-xs text-dip-text-muted mt-1">{mix.venue}</p>
+        </div>
+        {(mix.duration || mix.bpm) && (
+          <div className="text-right font-mono text-xs text-dip-text-muted leading-relaxed shrink-0">
+            {mix.duration && <div>{mix.duration}</div>}
+            {mix.bpm && <div className="text-dip-rose">{mix.bpm} BPM</div>}
+          </div>
+        )}
+      </div>
+
+      {id ? (
+        <div className="relative w-full mt-6 rounded-xl overflow-hidden border border-white/[0.08]" style={{ aspectRatio: '16 / 9' }}>
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`}
+            title={`YouTube — ${mix.title}`}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      ) : (
+        // URL we couldn't parse — link out rather than show a broken embed.
+        <a href={mix.youtubeUrl} target="_blank" rel="noreferrer" className="btn-brand mt-6">
+          <FaYoutube aria-hidden="true" className="w-5 h-5" /> Watch on YouTube
+        </a>
+      )}
+
+      <div className="mix-tags mt-5">
+        {mix.genreTags.map(tag => (
+          <span key={tag}>{tag}</span>
+        ))}
+      </div>
+
+      {mix.youtubeUrl && (
+        <a
+          href={mix.youtubeUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="label inline-flex items-center gap-2 hover:text-dip-cream transition-colors min-h-[44px] mt-1"
+        >
+          <FaYoutube aria-hidden="true" className="w-4 h-4 text-dip-red" /> Watch on YouTube →
+        </a>
+      )}
+    </div>
+  )
+}
+
+/* ── SoundCloud ──────────────────────────────────────────────────────── */
 
 const SC_WIDGET_SRC = 'https://w.soundcloud.com/player/api.js'
 
@@ -45,7 +111,6 @@ const WAVE_BARS = 32
 
 function Waveform({ playing }: { playing: boolean }) {
   const reduceMotion = useReducedMotion()
-  // Static heights so SSR / reduced-motion render is stable and visible.
   const heights = useRef(
     Array.from({ length: WAVE_BARS }, (_, i) => 30 + Math.abs(Math.sin(i * 0.9)) * 60),
   )
@@ -77,7 +142,7 @@ function Waveform({ playing }: { playing: boolean }) {
   )
 }
 
-function MixPlayer({ mix }: { mix: Mix }) {
+function SoundCloudMix({ mix }: { mix: Mix }) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const widgetRef = useRef<SCWidget | null>(null)
   const [playing, setPlaying] = useState(false)
@@ -85,7 +150,7 @@ function MixPlayer({ mix }: { mix: Mix }) {
   const [tracklistOpen, setTracklistOpen] = useState(false)
 
   const embedSrc =
-    `https://w.soundcloud.com/player/?url=${encodeURIComponent(mix.soundcloudUrl)}` +
+    `https://w.soundcloud.com/player/?url=${encodeURIComponent(mix.soundcloudUrl ?? '')}` +
     '&color=%23E63020&auto_play=false&hide_related=true&show_comments=false' +
     '&show_user=true&show_reposts=false&visual=false'
 
@@ -118,49 +183,43 @@ function MixPlayer({ mix }: { mix: Mix }) {
   }
 
   return (
-    <div className="bg-dip-dark border border-dip-rose/15 rounded-2xl p-6 md:p-8 flex flex-col gap-6">
-      {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+    <div className="presskit !rounded-[var(--r-lg)] gap-6">
+      <div className="pk-head">
         <div>
-          <h3 className="font-display text-3xl md:text-4xl text-dip-cream leading-tight">
-            {mix.title}
-          </h3>
-          <p className="font-body text-sm text-dip-text-muted mt-1">{mix.venue}</p>
+          <h3 className="mix-title">{mix.title}</h3>
+          <p className="font-mono text-xs text-dip-text-muted mt-1">{mix.venue}</p>
         </div>
-        <div className="text-right font-mono text-xs text-dip-text-muted leading-relaxed shrink-0">
-          <div>{mix.duration}</div>
-          <div className="text-dip-red">{mix.bpm} BPM</div>
-        </div>
+        {(mix.duration || mix.bpm) && (
+          <div className="text-right font-mono text-xs text-dip-text-muted leading-relaxed shrink-0">
+            {mix.duration && <div>{mix.duration}</div>}
+            {mix.bpm && <div className="text-dip-rose">{mix.bpm} BPM</div>}
+          </div>
+        )}
       </div>
 
-      {/* Transport + waveform */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mt-6">
         <button
           type="button"
           onClick={toggle}
           disabled={!ready}
           aria-label={playing ? `Pause ${mix.title}` : `Play ${mix.title}`}
-          className="shrink-0 w-14 h-14 rounded-full bg-dip-red text-white flex items-center justify-center text-xl transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-cream"
+          className={`play-btn ${playing ? 'on' : ''}`}
         >
-          <span aria-hidden="true">{playing ? '❚❚' : '▶'}</span>
+          {playing ? (
+            <svg viewBox="0 0 12 14" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="4" height="14" /><rect x="8" y="0" width="4" height="14" /></svg>
+          ) : (
+            <svg viewBox="0 0 12 14" width="14" height="14" fill="currentColor" aria-hidden="true" style={{ marginLeft: 2 }}><path d="M0 0l12 7-12 7z" /></svg>
+          )}
         </button>
         <Waveform playing={playing} />
       </div>
 
-      {/* Genre tags */}
-      <div className="flex flex-wrap gap-2">
+      <div className="mix-tags mt-5">
         {mix.genreTags.map(tag => (
-          <span
-            key={tag}
-            className="font-heading font-bold text-[11px] tracking-wide uppercase text-dip-rose/90 bg-dip-red/[0.1] border border-dip-red/[0.28] rounded-full px-3 py-1"
-          >
-            {tag}
-          </span>
+          <span key={tag}>{tag}</span>
         ))}
       </div>
 
-      {/* SoundCloud iframe — the real audio engine. Always present so the set
-          plays even if the JS Widget API fails to attach. */}
       <iframe
         ref={iframeRef}
         title={`SoundCloud player — ${mix.title}`}
@@ -170,12 +229,11 @@ function MixPlayer({ mix }: { mix: Mix }) {
         frameBorder="no"
         allow="autoplay"
         src={embedSrc}
-        className="rounded-xl w-full"
+        className="rounded-xl w-full mt-5"
       />
 
-      {/* Expandable tracklist */}
       {mix.tracklist.length > 0 && (
-        <div>
+        <div className="mt-5">
           <button
             type="button"
             onClick={() => setTracklistOpen(o => !o)}
@@ -192,11 +250,11 @@ function MixPlayer({ mix }: { mix: Mix }) {
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="overflow-hidden mt-3 space-y-2"
+                className="overflow-hidden mt-3 space-y-2 list-none p-0"
               >
                 {mix.tracklist.map((t, i) => (
                   <li key={i} className="flex items-baseline gap-4">
-                    <span className="font-mono text-xs text-dip-red/70 w-12 shrink-0">{t.time}</span>
+                    <span className="font-mono text-xs text-dip-rose w-12 shrink-0">{t.time}</span>
                     <span className="font-body text-sm text-dip-cream/80">{t.title}</span>
                   </li>
                 ))}
@@ -209,54 +267,57 @@ function MixPlayer({ mix }: { mix: Mix }) {
   )
 }
 
+function MixPlayer({ mix }: { mix: Mix }) {
+  return mix.youtubeUrl ? <YouTubeMix mix={mix} /> : <SoundCloudMix mix={mix} />
+}
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+
 export default function Mixes() {
-  const { social, mixes = [] } = useContent()
+  const { mixes = [] } = useContent()
   const [selectedId, setSelectedId] = useState<string | null>(null)
-  // Default selection follows the loaded mixes (store hydrates after mount).
   const selected = mixes.find(m => m.id === selectedId) ?? mixes[0] ?? null
-  const hasMixes = mixes.length > 0
+  const single = mixes.length === 1
 
   return (
-    <section id="mixes" className="bg-dip-black py-24 md:py-32 px-8 md:px-16 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto">
-        <Reveal className="mb-12 md:mb-16">
-          <p className="label mb-4">Music</p>
-          <h2 className="font-display text-7xl sm:text-8xl md:text-[9rem] text-dip-cream leading-none">
-            MIXES
-          </h2>
+    <section id="mixes" className="ed-section" aria-labelledby="mixes-t">
+      <div className="ed-wrap">
+        <Reveal className="sec-head">
+          <span className="sec-num" aria-hidden="true">02</span>
+          <h2 className="sec-title" id="mixes-t">Recorded <i>set</i></h2>
+          <p className="sec-kicker label">Production-led transitions, mature BPM control.</p>
         </Reveal>
 
-        {hasMixes ? (
+        {mixes.length === 0 ? null : single ? (
+          // ONE verified set — a single featured player. Nothing more promised.
+          <Reveal className="max-w-3xl">
+            {selected && <MixPlayer mix={selected} />}
+          </Reveal>
+        ) : (
           <div className="grid lg:grid-cols-[1fr_1.3fr] gap-8 lg:gap-12 items-start">
-            {/* Set list */}
             <Reveal>
-              <ul className="space-y-2">
+              <ul className="list-none m-0 p-0">
                 {mixes.map((mix, i) => {
-                  const activeId = selected?.id
-                  const active = mix.id === activeId
+                  const active = mix.id === selected?.id
                   return (
                     <li key={mix.id}>
                       <button
                         type="button"
                         onClick={() => setSelectedId(mix.id)}
                         aria-pressed={active}
-                        className={`w-full text-left flex items-center gap-4 p-4 rounded-xl border transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-dip-red ${
-                          active
-                            ? 'border-dip-red/50 bg-dip-red/[0.06]'
-                            : 'border-dip-rose/10 hover:border-dip-rose/30 hover:bg-dip-card'
-                        }`}
+                        className={`mix-row ${i === 0 ? 'first' : ''} ${active ? 'active' : ''}`}
                       >
-                        <span className="font-mono text-sm text-dip-red/70 w-8 shrink-0">
-                          {String(i + 1).padStart(2, '0')}
+                        <span className={`play-btn ${active ? 'on' : ''}`} aria-hidden="true">
+                          <svg viewBox="0 0 12 14" width="14" height="14" fill="currentColor" style={{ marginLeft: 2 }}><path d="M0 0l12 7-12 7z" /></svg>
                         </span>
                         <span className="min-w-0">
-                          <span className="block font-heading font-bold text-base text-dip-cream truncate">
-                            {mix.title}
-                          </span>
-                          <span className="block font-body text-xs text-dip-text-muted truncate">
-                            {mix.venue} · {mix.duration}
+                          <span className="mix-title block truncate">{mix.title}</span>
+                          <span className="mix-tags">
+                            {mix.genreTags.map(tag => <span key={tag}>{tag}</span>)}
                           </span>
                         </span>
+                        {mix.duration && <span className="mix-spec">{mix.duration}<small>Duration</small></span>}
+                        {mix.bpm && <span className="mix-bpm">{mix.bpm}<small>BPM</small></span>}
                       </button>
                     </li>
                   )
@@ -264,33 +325,10 @@ export default function Mixes() {
               </ul>
             </Reveal>
 
-            {/* Player */}
             <Reveal delay={0.1}>
               {selected && <MixPlayer mix={selected} />}
             </Reveal>
           </div>
-        ) : (
-          // HONEST empty-state — no fabricated sets.
-          <Reveal>
-            <div className="border border-dashed border-dip-rose/20 rounded-2xl p-10 md:p-14 text-center max-w-2xl">
-              <p className="font-display text-3xl md:text-4xl text-dip-cream leading-tight mb-4">
-                Sets dropping soon.
-              </p>
-              <p className="font-body font-light text-dip-text-muted text-base leading-relaxed mb-8">
-                Signature mixes with full tracklists land here. In the meantime,
-                catch the latest recordings straight from the source.
-              </p>
-              <a
-                href={`https://soundcloud.com/${social.soundcloud}`}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-brand inline-flex items-center gap-2 text-sm"
-              >
-                <FaSoundcloud aria-hidden="true" className="w-5 h-5" />
-                Listen on SoundCloud
-              </a>
-            </div>
-          </Reveal>
         )}
       </div>
     </section>
