@@ -58,14 +58,7 @@ export default function Booking() {
                   Download Press Kit (EPK)
                   <span aria-hidden="true">↓</span>
                 </a>
-              ) : (
-                <div className="flex flex-col gap-1">
-                  <button type="button" disabled aria-disabled="true" className="btn-outline w-full opacity-50 cursor-not-allowed">
-                    Press Kit (EPK) — Coming Soon
-                  </button>
-                  <span className="font-mono text-xs text-dip-text-muted">Full EPK PDF in preparation.</span>
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
 

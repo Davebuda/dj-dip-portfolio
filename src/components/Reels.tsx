@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
-import { FaTiktok } from 'react-icons/fa6'
-import Reveal from './ui/Reveal'
 import { useContent, type Reel } from '../hooks/useContent'
 
 /**
@@ -98,8 +96,9 @@ function ReelCard({ reel }: { reel: Reel }) {
 }
 
 export default function Reels() {
-  const { social, reels = [] } = useContent()
-  const hasReels = reels.length > 0
+  const { reels = [] } = useContent()
+  // No reels → the section doesn't appear at all (no "clips coming soon").
+  if (reels.length === 0) return null
 
   return (
     <section id="reels" className="ed-section overflow-x-hidden" aria-labelledby="reels-t">
@@ -111,40 +110,14 @@ export default function Reels() {
         </div>
       </div>
 
-      {hasReels ? (
-        // overflow-x-auto on the TRACK (not the page); section is overflow-x-hidden.
-        <div className="w-full overflow-x-auto overflow-y-hidden">
-          <ul className="flex gap-4 snap-x snap-mandatory list-none m-0 px-8 md:px-16 pb-2 w-max">
-            {reels.map(reel => (
-              <ReelCard key={reel.id} reel={reel} />
-            ))}
-          </ul>
-        </div>
-      ) : (
-        // HONEST empty-state — no fabricated reels.
-        <div className="ed-wrap">
-          <Reveal>
-            <div className="presskit !rounded-[var(--r-lg)] max-w-2xl text-center items-center">
-              <p className="font-display text-3xl md:text-4xl text-dip-cream leading-tight mb-4">
-                Clips coming soon.
-              </p>
-              <p className="font-body font-light text-dip-text-muted text-base leading-relaxed mb-8">
-                Short sets and floor moments will live here. For now, the full
-                feed is on TikTok.
-              </p>
-              <a
-                href={`https://tiktok.com/@${social.tiktok}`}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-brand inline-flex items-center gap-2 text-sm"
-              >
-                <FaTiktok aria-hidden="true" className="w-4 h-4" />
-                Watch on TikTok
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      )}
+      {/* overflow-x-auto on the TRACK (not the page); section is overflow-x-hidden. */}
+      <div className="w-full overflow-x-auto overflow-y-hidden">
+        <ul className="flex gap-4 snap-x snap-mandatory list-none m-0 px-8 md:px-16 pb-2 w-max">
+          {reels.map(reel => (
+            <ReelCard key={reel.id} reel={reel} />
+          ))}
+        </ul>
+      </div>
     </section>
   )
 }

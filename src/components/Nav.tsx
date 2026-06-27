@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react'
-
-// Only sections that actually render — no dead links. Capped at 6 for 375px.
-// Tech Rider is reachable from the Booking section / footer, not primary nav.
-const links = [
-  { label: 'Sound',   href: '#sound',   num: '01' },
-  { label: 'Mixes',   href: '#mixes',   num: '02' },
-  { label: 'Dates',   href: '#dates',   num: '03' },
-  { label: 'Reels',   href: '#reels',   num: '04' },
-  { label: 'Gallery', href: '#gallery', num: '05' },
-]
+import { useContent } from '../hooks/useContent'
 
 export default function Nav() {
+  // Links only for sections that actually render — empty sections (no mixes /
+  // no upcoming dates / no reels) drop out so there are no dead anchors.
+  const { mixes = [], events = [], reels = [] } = useContent()
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const hasUpcoming = events.some(e => {
+    const t = new Date(e.date).getTime()
+    return !Number.isNaN(t) && t >= today.getTime()
+  })
+  const links = [
+    { label: 'Sound', href: '#sound' },
+    ...(mixes.length ? [{ label: 'Mixes', href: '#mixes' }] : []),
+    ...(hasUpcoming ? [{ label: 'Dates', href: '#dates' }] : []),
+    ...(reels.length ? [{ label: 'Reels', href: '#reels' }] : []),
+    { label: 'Gallery', href: '#gallery' },
+  ].map((l, i) => ({ ...l, num: String(i + 1).padStart(2, '0') }))
+
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 

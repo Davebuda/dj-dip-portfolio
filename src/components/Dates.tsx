@@ -90,9 +90,10 @@ function DateRow({ ev, first }: { ev: DjEvent; first: boolean }) {
 }
 
 export default function Dates() {
-  const { social, events: allEvents = [] } = useContent()
+  const { events: allEvents = [] } = useContent()
   const events = upcoming(allEvents)
-  const hasDates = events.length > 0
+  // Nothing upcoming → the section doesn't appear at all (no "announced soon").
+  if (events.length === 0) return null
 
   return (
     <section id="dates" className="ed-section" aria-labelledby="dates-t">
@@ -103,36 +104,13 @@ export default function Dates() {
           <p className="sec-kicker label">Catch the set live across the Oslo circuit.</p>
         </Reveal>
 
-        {hasDates ? (
-          <RevealGroup stagger={0.06}>
-            {events.map((ev, i) => (
-              <RevealItem key={`${ev.date}-${ev.venue}-${i}`}>
-                <DateRow ev={ev} first={i === 0} />
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        ) : (
-          // HONEST empty-state — no fabricated dates.
-          <Reveal>
-            <div className="presskit !rounded-[var(--r-lg)] max-w-2xl text-center items-center">
-              <p className="font-display text-3xl md:text-4xl text-dip-cream leading-tight mb-4">
-                Dates announced soon.
-              </p>
-              <p className="font-body font-light text-dip-text-muted text-base leading-relaxed mb-8">
-                Upcoming club nights and residencies will be listed here. Follow
-                along to know when and where to catch the next set.
-              </p>
-              <a
-                href={`https://instagram.com/${social.instagram}`}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-brand"
-              >
-                Follow @{social.instagram}
-              </a>
-            </div>
-          </Reveal>
-        )}
+        <RevealGroup stagger={0.06}>
+          {events.map((ev, i) => (
+            <RevealItem key={`${ev.date}-${ev.venue}-${i}`}>
+              <DateRow ev={ev} first={i === 0} />
+            </RevealItem>
+          ))}
+        </RevealGroup>
       </div>
     </section>
   )
