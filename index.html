@@ -111,5 +111,7 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+      <script defer src="https://stats.pandoai.no/script.js" data-website-id="6f2e99f6-6103-4874-ae51-3819345ef233"></script>
+    <script>(function(){function t(n,d){if(window.umami&&umami.track){d?umami.track(n,d):umami.track(n)}}var h={};addEventListener('scroll',function(){var e=document.documentElement,y=e.scrollTop||document.body.scrollTop,m=(e.scrollHeight||document.body.scrollHeight)-e.clientHeight;if(m<=0)return;var p=Math.round(y/m*100);[25,50,75,90].forEach(function(x){if(p>=x&&!h[x]){h[x]=1;t('scroll-'+x)}})},{passive:true});addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a');if(a&&a.host&&a.host!==location.host){t('outbound',{url:a.href});return}var b=ev.target.closest&&ev.target.closest('button,[role=button],a[class*=btn],a[class*=cta]');if(b){var l=(b.getAttribute('aria-label')||b.textContent||'').trim().slice(0,60);if(l)t('click',{label:l})}},true)})();</script>
   </body>
 </html>
